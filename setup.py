@@ -24,6 +24,7 @@ AUTHOR = 'Kieras'
 # What packages are required for this module to be executed?
 REQUIRED = [
     'click',
+    'PyYAML'
 ]
 
 

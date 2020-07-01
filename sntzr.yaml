@@ -1,0 +1,6 @@
+---
+sanitize_ip: true
+keywords:
+  'abc\.com': 'acme.com'
+  'www\.com': 'acme.org'
+  'zzz\..*\.com': 'acme.edu'
