@@ -5,7 +5,7 @@
 Run:
 
 ```bash
-pipx install -e --force .
+pipx install git+https://github.com/kieras/sntzr.git
 ```
 
 ## Usage
