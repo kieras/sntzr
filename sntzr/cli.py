@@ -20,20 +20,17 @@ def main(input_file, config_file):
 
 def load_config(config_file):
     with open(config_file) as f:
-        config = yaml.load(f)
+        config = yaml.safe_load(f)
     return config
 
 
 def process_line(line, config):
-    if config['sanitize_ip']:
-        line = sanitize_ip(line)
+    line = sanitize_ips(line, config['ip_regex'], config['ip_prefix'])
     line = sanitize_keywords(line, config['keywords'])
     return line
 
 
-def sanitize_ip(line):
-    ip_regex = '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
-    ip_prefix = '1.2.3.'
+def sanitize_ips(line, ip_regex, ip_prefix):
     ip_counter = 1
     matches = re.findall(ip_regex, line)
     if matches is not None:
