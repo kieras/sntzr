@@ -1,4 +1,10 @@
 ---
+global_patterns:
+  - 'name': 'hex_id'
+    'typeof': 'raw'
+    'typeof_placeholder': '-'
+    'regex': '[A-Fa-f0-9]{32,64}'
+    'activated': true
 ip_regex: '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
 ip_prefix: '1.1.1.'
 keywords:
