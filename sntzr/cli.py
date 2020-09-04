@@ -55,13 +55,13 @@ def sanitize_keywords(line, keywords):
 
 
 def build_full_pattern(global_pattern, value):
-    typeof = global_pattern['typeof']
-    typeof_placeholder =  global_pattern['typeof_placeholder']
+    kindof = global_pattern['kindof']
+    kindof_placeholder =  global_pattern['kindof_placeholder']
 
-    if typeof == 'raw':
+    if kindof == 'raw':
         return value
-    elif typeof == 'tag_xml':
-        return '<{}>{}</{}>'.format(typeof_placeholder, value, typeof_placeholder)
+    elif kindof == 'tag_xml':
+        return '<{}>{}</{}>'.format(kindof_placeholder, value, kindof_placeholder)
 
 
 def sanitize_global_patterns(line, global_patterns):
@@ -99,16 +99,16 @@ def get_new_value_by_original_value(original_value):
 def add_global_pattern_value(global_pattern, key):
     original_value = key
 
-    if global_pattern['typeof'] == 'tag_xml':
-        i_tag = '<{}>'.format(global_pattern['typeof_placeholder'])
-        e_tag = '</{}>'.format(global_pattern['typeof_placeholder'])
+    if global_pattern['kindof'] == 'tag_xml':
+        i_tag = '<{}>'.format(global_pattern['kindof_placeholder'])
+        e_tag = '</{}>'.format(global_pattern['kindof_placeholder'])
         original_value = key.split(i_tag)[1].split(e_tag)[0]
 
     new_value = get_new_value_by_original_value(original_value)
 
     if new_value is None:
         length = len(original_value)
-        new_value = generate_random_value_by_name(global_pattern['name'], length)
+        new_value = generate_random_value_by_kind(global_pattern['kind'], length)
 
     str_value_to_be_replaced = build_full_pattern(global_pattern, new_value)
 
@@ -125,24 +125,24 @@ def generate_random_hexdecimal(length, is_lower_case):
     return str_value if is_lower_case else str_value.lower()
 
 
-def generate_random_value_by_name(name, length=0):
-    if name == 'hex_id' or name == 'sha256':
+def generate_random_value_by_kind(kind, length=0):
+    if kind == 'hex_id' or kind == 'sha256':
         return generate_random_hexdecimal(length, True)
 
-    elif name == 'crazy_name':
+    elif kind == 'crazy_name':
         r1 = random.randint(1,15)
         r2 = random.randint(15,30)
         r3 = random.randint(1,30)
         return  'S-{}-{}-{}'.format(r1, r2, r3)
 
-    elif name == 'mac_address_no_colon':
+    elif kind == 'mac_address_no_colon':
         return generate_random_hexdecimal(12, True)
 
-    elif name == 'ip':
+    elif kind == 'ip':
         r1 = random.randint(1,255)
         return '10.20.30.{}'.format(r1)
 
-    elif name == 'guid':
+    elif kind == 'guid':
         r1 = generate_random_hexdecimal(8, False)
         r2 = generate_random_hexdecimal(4, False)
         r3 = generate_random_hexdecimal(4, False)
@@ -150,7 +150,7 @@ def generate_random_value_by_name(name, length=0):
         r5 = generate_random_hexdecimal(12, False)
         return '{}-{}-{}-{}-{}'.format(r1, r2, r3, r4, r5)
 
-    elif name == 'machine_name':
+    elif kind == 'machine_name':
         letters = ['A', 'B', 'C', 'X', 'Y', 'Z']
         r1 = ''.join(random.choice(letters) for i in range(4))
         r2 = random.randint(100000,999999)

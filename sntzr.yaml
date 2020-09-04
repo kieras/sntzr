@@ -1,9 +1,14 @@
 ---
 global_patterns:
-  - 'name': 'hex_id'
-    'typeof': 'raw'
-    'typeof_placeholder': '-'
+  - 'kind': 'hex_id'
+    'kindof': 'raw'
+    'kindof_placeholder': '-'
     'regex': '[A-Fa-f0-9]{32,64}'
+    'activated': true
+  - 'kind': 'mac_address_no_colon'
+    'kindof': 'tag_xml'
+    'kindof_placeholder': 'RawMACAddress'
+    'regex': '[A-Fa-f0-9]{12}'
     'activated': true
 ip_regex: '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}'
 ip_prefix: '1.1.1.'
