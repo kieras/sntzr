@@ -62,6 +62,8 @@ def build_full_pattern(global_pattern, value):
         return value
     elif kindof == 'tag_xml':
         return '<{}>{}</{}>'.format(kindof_placeholder, value, kindof_placeholder)
+    elif kindof == 'kv':
+        return '{}={}'.format(kindof_placeholder, value)
 
 
 def sanitize_global_patterns(line, global_patterns):
@@ -99,10 +101,15 @@ def get_new_value_by_original_value(original_value):
 def add_global_pattern_value(global_pattern, key):
     original_value = key
 
+    # TODO: felipegc create separate method for this
     if global_pattern['kindof'] == 'tag_xml':
         i_tag = '<{}>'.format(global_pattern['kindof_placeholder'])
         e_tag = '</{}>'.format(global_pattern['kindof_placeholder'])
         original_value = key.split(i_tag)[1].split(e_tag)[0]
+    elif global_pattern['kindof'] == 'kv':
+        kv = '{}='.format(global_pattern['kindof_placeholder'])
+        original_value = key.split(kv)[1]
+
 
     new_value = get_new_value_by_original_value(original_value)
 
@@ -156,6 +163,20 @@ def generate_random_value_by_kind(kind, length=0):
         r2 = random.randint(100000,999999)
         r3 = ''.join(random.choice(letters) for i in range(3))
         return '{}{}-{}'.format(r1, r2, r3)
+
+    elif kind == 'external_id':
+        r1 = random.randint(100000,999999)
+        return str(r1)
+
+    elif kind == 'dt_machine_name':
+        r1 = random.randint(1000,9999)
+        r2 = random.randint(10,99)
+        return 'dtools-dt-{}-{}'.format(r1, r2)
+
+    elif kind == 'shost':
+        letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', '1', '2', '3', '4']
+        r1 = ''.join(random.choice(letters) for i in range(4))
+        return 'www.{}.com'.format(r1)
 
 
 if __name__ == "__main__":
