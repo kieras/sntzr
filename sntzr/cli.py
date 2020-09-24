@@ -81,6 +81,8 @@ def sanitize_global_patterns(line, global_patterns):
         if len(matches) > 0:
             unique_matches = set(matches)
             for match in unique_matches:
+                # TODO: felipegc improve the way we are dealing with scapes. The way findall and sub deal with that is different
+                match = match.replace('\\', '\\\\')
                 if match in global_patterns_values:
                     line = re.sub(match, global_patterns_values[match]['str_to_replace'], line)
                 else:
@@ -177,6 +179,24 @@ def generate_random_value_by_kind(kind, length=0):
         letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', '1', '2', '3', '4']
         r1 = ''.join(random.choice(letters) for i in range(4))
         return 'www.{}.com'.format(r1)
+
+    elif kind == 'user_name_with_domain':
+        domains = ['COMP', 'NT DOM']
+        r1 = ''.join(random.choice(domains) for i in range(1))
+        letters = ['A', 'E', 'I', 'O', 'U', 'K', 'L', 'M', 'X', 'Y', 'Z']
+        r2 = ''.join(random.choice(letters) for i in range(8))
+        return '{}\\\\\\\\{}'.format(r1, r2)
+
+    elif kind == 'user_name_2l_6n':
+        letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'x', 'y', 'z']
+        r1 = ''.join(random.choice(letters) for i in range(2))
+        r2 = random.randint(100000,999999)
+        return '{}{}'.format(r1, r2)
+
+    elif kind == 'user_name_upper':
+        letters = ['A', 'E', 'I', 'O', 'U', 'K', 'L', 'M', 'X', 'Y', 'Z']
+        r1 = ''.join(random.choice(letters) for i in range(8))
+        return '{}'.format(r1)
 
 
 if __name__ == "__main__":
