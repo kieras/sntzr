@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
-import binascii
 import click
-import os
-import random
 import re
 import yaml
-
 from sntzr.__version__ import __version__ as version
+from sntzr import replacers_fn
 
 global_patterns_values = {}
 all_config = None
@@ -132,6 +129,11 @@ def sanitize_patterns(line):
     global_patterns = all_config['patterns']
 
     for item in global_patterns:
+        activated = item['activated']
+
+        if not activated:
+            continue
+
         regex = get_regex_pattern(item['pattern'])
 
         full_pattern_regex = build_full_pattern(item, regex)
@@ -143,11 +145,12 @@ def sanitize_patterns(line):
             for key in unique_keys:
                 # TODO: felipegc improve the way we are dealing with scapes. The way findall and sub deal with that is different
                 key = key.replace('\\', '\\\\')
-                if key in global_patterns_values:
-                    line = re.sub(key, global_patterns_values[key]['str_to_replace'], line)
-                else:
+
+                if key not in global_patterns_values:
                     add_global_pattern_value(item, key)
-                    line = re.sub(key, global_patterns_values[key]['str_to_replace'], line)
+
+                line = re.sub(key, global_patterns_values[key]['str_to_replace'], line)
+                line = re.sub(global_patterns_values[key]['original_value'], global_patterns_values[key]['new_value'], line)
 
     return line
 
@@ -160,71 +163,10 @@ def generate_new_value(global_pattern, length=0):
 
     replace = global_pattern['replace']
 
-    try:
-        return globals()[replace](length)
-    except:
+    if hasattr(replacers_fn, replace):
+        return getattr(replacers_fn, replace)(length)
+    else:
         return replace
-
-
-# Utils to generate random values
-def generate_random_hexdecimal(length, is_lower_case):
-    random_value = binascii.hexlify(os.urandom(int(length/2)))
-    str_value = random_value.decode('utf-8')
-    return str_value if is_lower_case else str_value.lower()
-
-
-def mac_no_colon(length=0):
-    return generate_random_hexdecimal(length, True)
-
-
-def hex(length=0):
-    return generate_random_hexdecimal(length, True)
-
-
-def crazy_name(length=0):
-    r1 = random.randint(1,15)
-    r2 = random.randint(15,30)
-    r3 = random.randint(1,30)
-    return  'S-{}-{}-{}'.format(r1, r2, r3)
-
-
-def machine_name(length=0):
-    letters = ['A', 'B', 'C', 'X', 'Y', 'Z']
-    r1 = ''.join(random.choice(letters) for i in range(4))
-    r2 = random.randint(100000,999999)
-    r3 = ''.join(random.choice(letters) for i in range(3))
-    return '{}{}-{}'.format(r1, r2, r3)
-
-
-def ipv4(length=0):
-    r1 = random.randint(1,255)
-    return '10.20.30.{}'.format(r1)
-
-
-def guid(length=0):
-    r1 = generate_random_hexdecimal(8, False)
-    r2 = generate_random_hexdecimal(4, False)
-    r3 = generate_random_hexdecimal(4, False)
-    r4 = generate_random_hexdecimal(4, False)
-    r5 = generate_random_hexdecimal(12, False)
-    return '{}-{}-{}-{}-{}'.format(r1, r2, r3, r4, r5)
-
-
-def shost(length=0):
-    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', '1', '2', '3', '4']
-    r1 = ''.join(random.choice(letters) for i in range(4))
-    return 'www.{}.com'.format(r1)
-
-
-def external_id(length=0):
-    r1 = random.randint(100000,999999)
-    return str(r1)
-
-
-def dt_machine_name(length=0):
-    r1 = random.randint(1000,9999)
-    r2 = random.randint(10,99)
-    return 'dtools-dt-{}-{}'.format(r1, r2)
 
 
 if __name__ == "__main__":
