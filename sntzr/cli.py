@@ -143,8 +143,10 @@ def sanitize_patterns(line):
         if len(matches) > 0:
             unique_keys = set(matches)
             for key in unique_keys:
-                # TODO: felipegc improve the way we are dealing with scapes. The way findall and sub deal with that is different
+                # TODO: felipegc improve the way we are dealing with scapes and special chars. The way findall and sub deal with that is different
                 key = key.replace('\\', '\\\\')
+                key = key.replace('(', '\(')
+                key = key.replace(')', '\)')
 
                 if key not in global_patterns_values:
                     add_global_pattern_value(item, key)
