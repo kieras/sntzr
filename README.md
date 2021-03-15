@@ -1,5 +1,7 @@
 # SNTZR
 
+A small tool to help clean up log files.
+
 ## Installation
 
 Run:
