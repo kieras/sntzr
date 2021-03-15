@@ -25,8 +25,21 @@ def load_config(config_file):
 
 
 def process_line(line, config):
+    line = sanitize_emails(line, config['email_prefix'])
     line = sanitize_ips(line, config['ip_regex'], config['ip_prefix'])
     line = sanitize_keywords(line, config['keywords'])
+    return line
+
+
+def sanitize_emails(line, email_prefix):
+    email_counter = 1
+    email_regex = r'[\w\.-]+@[\w\.-]+(?:\.[\w]+)+'
+    matches = re.findall(email_regex, line)
+    if matches is not None:
+        unique_matches = set(matches)
+        for email in unique_matches:
+            line = line.replace(email, email_prefix + str(email_counter) + '@xyz.com')
+            email_counter = email_counter + 1
     return line
 
 
