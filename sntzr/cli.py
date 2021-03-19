@@ -33,6 +33,26 @@ def process_line(line):
     return line
 
 
+def validate_and_normalize_item(item):
+    """
+    Validate if there is any mandatory field missing such as pattern, replace.
+    If non mandatory fields are missing, they are normalized to default values.
+    """
+
+    if 'pattern' not in item.keys():
+        raise Exception('The pattern field is missing for item -> {}'.format(item))
+    elif 'replace' not in item.keys():
+        raise Exception('The pattern field is missing for item -> {}'.format(item))
+
+    if 'data' not in item.keys():
+        item['data'] = 'raw'
+
+    if 'field' not in item.keys():
+        item['field'] = '-'
+
+    if 'activated' not in item.keys():
+        item['activated'] = True
+
 # Utils to manipulate global_pattern
 def build_full_pattern(global_pattern, value):
     """
@@ -129,6 +149,7 @@ def sanitize_patterns(line):
     global_patterns = all_config['patterns']
 
     for item in global_patterns:
+        validate_and_normalize_item(item)
         activated = item['activated']
 
         if not activated:
@@ -143,7 +164,7 @@ def sanitize_patterns(line):
         if len(matches) > 0:
             unique_keys = set(matches)
             for key in unique_keys:
-                # TODO: felipegc improve the way we are dealing with scapes and special chars. The way findall and sub deal with that is different
+                # TODO: felipegc improve the way we are dealing with scapes and special chars. The way findall and sub deal with them are different
                 key = key.replace('\\', '\\\\')
                 key = key.replace('(', '\(')
                 key = key.replace(')', '\)')

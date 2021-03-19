@@ -2,11 +2,18 @@ import binascii
 import os
 import random
 
-# Utils to generate random values
+# Utils to generate random hex values
 def generate_random_hexdecimal(length, is_lower_case):
     random_value = binascii.hexlify(os.urandom(int(length/2)))
     str_value = random_value.decode('utf-8')
     return str_value if is_lower_case else str_value.lower()
+
+
+# Utils to generate random number values
+def generate_random_number(length):
+    start = '1' + ''.join('0' for i in range(length-1))
+    end = '9' + ''.join('9' for i in range(length-1))
+    return '{}'.format(random.randint(int(start), int(end)))
 
 
 def mac_no_colon(length=0):
@@ -66,7 +73,7 @@ def guid(length=0):
 def shost(length=0):
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', '1', '2', '3', '4']
     r1 = ''.join(random.choice(letters) for i in range(4))
-    return 'www.{}.com'.format(r1)
+    return 'www.{}.acme.com'.format(r1)
 
 
 def external_id(length=0):
@@ -145,3 +152,13 @@ def ad_log_id(length=0):
     r1 = random.randint(1000000000,9999999999)
     r2 = random.randint(1000000000,9999999999)
     return '{}/{}'.format(r1, r2)
+
+
+def id_number(length=0):
+    return generate_random_number(length)
+
+
+def random_company_name(length=0):
+    names = ['Acme', 'aloha', 'blaster', 'toster', 'Sa_Uap', 'Stark']
+    r1 = names[random.randint(0, len(names) - 1)]
+    return '{}'.format(r1)
