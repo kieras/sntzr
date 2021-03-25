@@ -5,6 +5,7 @@ global_regex:
   'gr://host': '(?:[0-9A-Za-z][0-9A-Za-z-]{0,62})(?:\.(?:[0-9A-Za-z][0-9A-Za-z-]{0,62}))*'
   'gr://latitude_longitude': '[+-]?[\d]+\.[\d]+'
   'gr://guid': '[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}'
+  'gr://sid': 'sid_[0-9a-zA-Z]+_[0-9A-Z]+'
 
 patterns:
   # KIERAS
@@ -316,6 +317,7 @@ patterns:
     'activated': false
   - 'pattern': 'prod.outlook.com'
     'replace': 'test.email.com'
+    'activated': false
   # IMPERVA_WAF
   - 'data': 'kv'
     'field': 'src'
@@ -352,6 +354,7 @@ patterns:
     'activated': false
   - 'pattern': 'nwlink163'
     'replace': 'device01'
+    'activated': false
   - 'data': 'kv'
     'field': 'tcs7'
     'pattern': 'gr://latitude_longitude'
@@ -385,4 +388,35 @@ patterns:
   # HONEYD
   - 'pattern': 'gr://ipv4'
     'replace': 'ipv4'
+    'activated': false
+  # MYSQL
+  - 'pattern': 'p99'
+    'replace': 'z12'
+    'activated': false
+  - 'pattern': 'P99'
+    'replace': 'Z12'
+    'activated': false
+  - 'pattern': 'vcs'
+    'replace': 'abc'
+    'activated': false
+  - 'pattern': 'VCS'
+    'replace': 'ABC'
+    'activated': false
+  - 'pattern': 'gr://sid'
+    'replace': 'sid'
+    'activated': false
+  - 'pattern': 'gr://guid'
+    'replace': 'guid'
+    'activated': false
+  - 'pattern': 'gr://guid'
+    'replace': 'guid'
+    'activated': false
+  - 'pattern': 'host: ''(?!localhost)[a-z]*'''
+    'replace': 'host: ''GENERATE_HOST'''
+    'activated': false
+  - 'pattern': 'db: ''(?!unconnected)[a-z]*'''
+    'replace': 'host: ''GENERATE_DB'''
+    'activated': false
+  - 'pattern': 'user: ''(?!unconnected)[a-z]*'''
+    'replace': 'mysql_user'
     'activated': false

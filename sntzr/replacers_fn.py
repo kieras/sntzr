@@ -16,6 +16,12 @@ def generate_random_number(length):
     return '{}'.format(random.randint(int(start), int(end)))
 
 
+# Utils to generate random names in lowercase
+def generate_random_user():
+    names = ['jonhdoe', 'stark', 'marry', 'max', 'jonh', 'wayne', 'creed']
+    return random.choice(names)
+
+
 def mac_no_colon(length=0):
     return generate_random_hexdecimal(length, True)
 
@@ -55,6 +61,7 @@ def machine_name(length=0):
 def ipv4(length=0):
     r1 = random.randint(1,255)
     return '10.20.30.{}'.format(r1)
+
 
 def ipv4_between_spaces(length=0):
     r1 = ipv4(length)
@@ -162,3 +169,17 @@ def random_company_name(length=0):
     names = ['Acme', 'aloha', 'blaster', 'toster', 'Sa_Uap', 'Stark']
     r1 = names[random.randint(0, len(names) - 1)]
     return '{}'.format(r1)
+
+
+def sid(length=0):
+    letters = ['A', 'B', 'C', 'D', 'E', 'F', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+    r1 = ''.join(random.choice(letters) for i in range(7))
+    r2 = random.choice(letters)
+
+    return 'sid_{}_{}'.format(r1, r2)
+
+
+def mysql_user(length=0):
+    user = generate_random_user()
+
+    return 'user: \'{}\''.format(user)
