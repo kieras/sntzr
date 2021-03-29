@@ -6,9 +6,15 @@ global_regex:
   'gr://latitude_longitude': '[+-]?[\d]+\.[\d]+'
   'gr://guid': '[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}'
   'gr://sid': 'sid_[0-9a-zA-Z]+_[0-9A-Z]+'
+  'gr://email': '[\w\.-]+@[\w\.-]+(?:\.[\w]+)+'
 
 patterns:
-  # KIERAS
+  - 'pattern': 'gr://email'
+    'replace': 'email_simple'
+  - 'pattern': 'cvshealth'
+    'replace': 'acme'
+  - 'pattern': 'aetna'
+    'replace': 'acme2'
   - 'pattern': '@[^xyz.com].*?>'
     'replace': '@acmex.com>'
   - 'pattern': 'vuhl\.root\.mrc'

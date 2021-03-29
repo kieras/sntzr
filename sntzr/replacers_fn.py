@@ -147,6 +147,13 @@ def domain_email_user(length=0):
     return '{}@{}.{}.{}'.format(r1, r2, r3, r4)
 
 
+def email_simple(length=0):
+    domains = ['acme.com', 'aloha.org', 'blaster.com', 'toster.org']
+    domain = domains[random.randint(0, len(domains) - 1)]
+    user = generate_random_user()
+    return '{}@{}'.format(user, domain)
+
+
 def ad_domain(length=0):
     letters = ['seabh', 'sealossan', 'earthbh', 'earthlossan', 'firelos', 'firevice', 'firecero']
     domains = ['prd', 'hom', 'test', 'local']
