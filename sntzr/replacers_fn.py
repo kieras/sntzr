@@ -18,7 +18,7 @@ def generate_random_number(length):
 
 # Utils to generate random names in lowercase
 def generate_random_user():
-    names = ['jonhdoe', 'stark', 'marry', 'max', 'jonh', 'wayne', 'creed']
+    names = ['user1', 'user2', 'user3', 'user4', 'user5', 'user6', 'user7']
     return random.choice(names)
 
 
@@ -112,7 +112,7 @@ def host_numbers_letters(length=0):
 
 
 def domain_plus_user(length=0):
-    domains = ['acme', 'aloha', 'blaster', 'toster']
+    domains = ['acme1', 'acme2', 'acme3', 'acme4']
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', '1', '2', '3', '4', '5', '6']
     r1 = domains[random.randint(0, len(domains) - 1)]
     r2 = ''.join(random.choice(letters) for i in range(8))
@@ -127,7 +127,7 @@ def user_name_dot_surname(length=0):
 
 
 def host_plus_domain(length=0):
-    domains = ['ACME', 'ALOHA', 'BLASTER', 'TOSTER']
+    domains = ['ACME1', 'ACME2', 'ACME3', 'ACME4']
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', '1', '2', '3', '4', '5', '6']
     letters_up = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', '1', '2', '3', '4', '5', '6']
     r1 = ''.join(random.choice(letters) for i in range(4))
@@ -138,7 +138,7 @@ def host_plus_domain(length=0):
 
 
 def domain_email_user(length=0):
-    domains = ['acme', 'aloha', 'blaster', 'toster']
+    domains = ['acme1', 'acme2', 'acme3', 'acme4']
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', '1', '2', '3', '4', '5', '6']
     r1 = domains[random.randint(0, len(domains) - 1)]
     r2 = ''.join(random.choice(letters) for i in range(8))
@@ -148,14 +148,15 @@ def domain_email_user(length=0):
 
 
 def email_simple(length=0):
-    domains = ['acme.com', 'aloha.org', 'blaster.com', 'toster.org']
+    domains = ['acme1.com', 'acme2.com', 'acme3.com', 'acme4.com']
     domain = domains[random.randint(0, len(domains) - 1)]
     user = generate_random_user()
     return '{}@{}'.format(user, domain)
 
 
 def ad_domain(length=0):
-    letters = ['seabh', 'sealossan', 'earthbh', 'earthlossan', 'firelos', 'firevice', 'firecero']
+    letters = ['acme1', 'acme2', 'acme3',
+               'acme4', 'acme5', 'acme6', 'acme7']
     domains = ['prd', 'hom', 'test', 'local']
     r1 = letters[random.randint(0, len(letters) - 1)]
     r2 = domains[random.randint(0, len(domains) - 1)]
@@ -173,7 +174,7 @@ def id_number(length=0):
 
 
 def random_company_name(length=0):
-    names = ['Acme', 'aloha', 'blaster', 'toster', 'Sa_Uap', 'Stark']
+    names = ['Acme1', 'Acme2', 'Acme3', 'Acme4', 'Acme5', 'Acme6']
     r1 = names[random.randint(0, len(names) - 1)]
     return '{}'.format(r1)
 
@@ -188,5 +189,4 @@ def sid(length=0):
 
 def mysql_user(length=0):
     user = generate_random_user()
-
     return 'user: \'{}\''.format(user)
