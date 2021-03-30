@@ -11,6 +11,12 @@ global_regex:
 patterns:
   - 'pattern': 'gr://email'
     'replace': 'email_simple'
+  - 'pattern': 'carcgl'
+    'replace': 'acmecgl'
+  - 'pattern': 'CARCGL'
+    'replace': 'ACMECGL'
+  - 'pattern': 'Fyrnetics'
+    'replace': 'Acmenetics'
   - 'pattern': 'cvshealth'
     'replace': 'acme'
   - 'pattern': 'aetna'
