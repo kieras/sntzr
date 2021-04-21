@@ -18,8 +18,13 @@ def main(input_file, config_file):
     all_config = load_config(config_file)
     with open(input_file) as in_file:
         for line in in_file:
-            processed_line = process_line(line)
-            print(processed_line, end='')
+            is_data_line = line.find('data:') > -1
+            if is_data_line:
+                processed_line = process_line(line)
+                print(processed_line, end='')
+            else:
+                print(line, end='')
+
 
 
 def load_config(config_file):
@@ -69,6 +74,8 @@ def build_full_pattern(global_pattern, value):
         return '<{}>{}</{}>'.format(field, value, field)
     elif data == 'kv':
         return '{}={}'.format(field, value)
+    elif data == 'json':
+        return '\\\\\"{}\\\\\":\\\\\"{}\\\\\"'.format(field, value)
 
 
 def extract_value(global_pattern, key):
@@ -86,6 +93,9 @@ def extract_value(global_pattern, key):
     elif global_pattern['data'] == 'kv':
         kv = '{}='.format(global_pattern['field'])
         original_value = key.split(kv)[1]
+    elif global_pattern['data'] == 'json':
+        json = '\\\\\\\\\"{}\\\\\\\\\":\\\\\\\\\"([^\\"]*)\\\\\\\\\"'.format(global_pattern['field'])
+        original_value = re.search(json, key).group(1)
 
     return original_value
 
@@ -158,7 +168,6 @@ def sanitize_patterns(line):
         regex = get_regex_pattern(item['pattern'])
 
         full_pattern_regex = build_full_pattern(item, regex)
-
         matches = re.findall(full_pattern_regex, line)
 
         if len(matches) > 0:
