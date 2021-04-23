@@ -37,5 +37,27 @@ class ReplacersFn(unittest.TestCase):
         self.assertTrue(len(match) == 1)
 
 
+    def test_regex_raw_python(self):
+        """
+        Simple test to learn how to escape escape properly using python. The trick is using raw string.
+        """
+        value = r'\"author\":\"Felipe, Test A.   (GOD)\"'
+        pattern = re.compile(r'\\"author\\":(\\"[^\\"]*\\")')
+        match = re.findall(pattern, value)
+
+        self.assertTrue(len(match) == 1)
+
+
+    def test_regex_raw_python(self):
+        """
+        Simple test to learn how to escape escape properly using python. The trick is using raw string.
+        """
+        value = r'\"cc\":[\"Felipe.Castro@abc.lps.state.ab.mg\",\"alohatest@bast.com\"]'
+        pattern = re.compile(r'\\"cc\\":\[[^\]]*\]')
+        match = re.findall(pattern, value)
+
+        self.assertTrue(len(match) == 1)
+
+
 if __name__ == '__main__':
     unittest.main()

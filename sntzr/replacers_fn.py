@@ -22,6 +22,37 @@ def generate_random_user():
     return random.choice(names)
 
 
+def doc_id(length=0):
+    r1 = generate_random_hexdecimal(12, False)
+    r2 = generate_random_number(10)
+    r3 = generate_random_number(5)
+    return '{}-{}-{}'.format(r1, r2, r3)
+
+
+def agent(length=0):
+    r1 = generate_random_hexdecimal(8, False)
+    return '{}.acme.net'.format(r1)
+
+
+def assetid(length=0):
+    letters = ['A', 'B', 'C', 'X', 'Y', 'Z']
+    r1 = ''.join(random.choice(letters) for i in range(2))
+    r2 = generate_random_number(9)
+    return '{}{}'.format(r1, r2)
+
+
+def cartid(length=0):
+    letters = ['A', 'B', 'C', 'X', 'Y', 'Z']
+    r1 = random.choice(letters)
+    r2 = generate_random_number(8)
+    return '{}-{}'.format(r1, r2)
+
+
+def generate_random_string(length):
+    letters = ['A', 'B', 'C', 'X', 'Y', 'Z', 'f', 'g', 'h', 'i', 'j', 'k', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+    return ''.join(random.choice(letters) for i in range(length))
+
+
 def mac_no_colon(length=0):
     return generate_random_hexdecimal(length, True)
 
@@ -41,6 +72,12 @@ def mac_address_colon(length=0):
 
 def hex(length=0):
     return generate_random_hexdecimal(length, True)
+
+
+def pos_neg_number(length=0):
+    signal = random.choice(['-', ''])
+    number = generate_random_number(length)
+    return '{}{}'.format(signal, number)
 
 
 def crazy_name(length=0):
@@ -126,6 +163,27 @@ def user_name_dot_surname(length=0):
     return '{}.{}'.format(r1, r2)
 
 
+def surname_comma_name(length=0):
+    firstname = ['tony', 'viuva', 'jonh', 'bruce', 'clark', 'saga']
+    secondname = ['stark', 'spider', 'doe', 'wayne', 'kent']
+    r1 = random.choice(firstname)
+    r2 = random.choice(secondname)
+    return '{}, {}'.format(r1, r2)
+
+
+def name_surname(length=0):
+    firstname = ['tony', 'viuva', 'jonh', 'bruce', 'clark', 'saga']
+    secondname = ['stark', 'spider', 'doe', 'wayne', 'kent']
+    r1 = random.choice(firstname)
+    r2 = random.choice(secondname)
+    complement = random.randint(0, 10) % 2
+    if complement:
+        r3 = generate_random_string(7)
+        return '{} {}   ({})'.format(r1, r2, r3)
+    else:
+        return '{} {}'.format(r1, r2)
+
+
 def host_plus_domain(length=0):
     domains = ['ACME1', 'ACME2', 'ACME3', 'ACME4']
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', '1', '2', '3', '4', '5', '6']
@@ -145,6 +203,17 @@ def domain_email_user(length=0):
     r3 = ''.join(random.choice(letters) for i in range(5))
     r4 = ''.join(random.choice(letters) for i in range(3))
     return '{}@{}.{}.{}'.format(r1, r2, r3, r4)
+
+
+def email_user(length=0):
+    firstname = ['tony', 'viuva', 'jonh', 'bruce', 'clark', 'saga']
+    secondname = ['stark', 'spider', 'doe', 'wayne', 'kent']
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', '1', '2', '3', '4', '5', '6']
+    r1 = random.choice(firstname)
+    r2 = random.choice(secondname)
+    r3 = ''.join(random.choice(letters) for i in range(5))
+    r4 = ''.join(random.choice(letters) for i in range(3))
+    return '{}.{}@{}.{}.com'.format(r1, r2, r3, r4)
 
 
 def email_simple(length=0):
@@ -190,3 +259,39 @@ def sid(length=0):
 def mysql_user(length=0):
     user = generate_random_user()
     return 'user: \'{}\''.format(user)
+
+
+# def json_big_id(length=0):
+#     return r'\"{}\"'.format(generate_random_string(length))
+
+
+# def json_surname_comma_name(length=0):
+#     return r'\"{}\"'.format(surname_comma_name())
+
+
+# def json_doc_id(length=0):
+#     return r'\"{}\"'.format(doc_id())
+
+
+# def json_guid(length=0):
+#     return r'\"{}\"'.format(guid())
+
+
+# def json_agent(length=0):
+#     return r'\"{}\"'.format(agent())
+
+
+# def json_assetid(length=0):
+#     return r'\"{}\"'.format(assetid())
+
+
+# def json_name_surname(length=0):
+#     return r'\"{}\"'.format(name_surname())
+
+
+# def json_email_user(length=0):
+#     return r'\"{}\"'.format(email_user())
+
+
+# def json_hex(length=0):
+#     return r'\"{}\"'.format(hex(length))
