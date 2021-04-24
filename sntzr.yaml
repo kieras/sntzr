@@ -7,9 +7,9 @@ global_regex:
   'gr://guid': '[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}'
   'gr://sid': 'sid_[0-9a-zA-Z]+_[0-9A-Z]+'
   'gr://email': '[\w\.-]+@[\w\.-]+(?:\.[\w]+)+'
-  'gr://json_string_value': '\"[^\"]*\"'
+  'gr://json_string_value': '\\"[^\\"]*\\"'
   'gr://json_number_value': '[+-]?[0-9]+'
-  'gr://json_array': '\[[^\]]*\]'
+  'gr://json_array': '\[[^]]+\]'
 
 patterns:
   #- 'pattern': 'gr://email'
@@ -465,7 +465,7 @@ patterns:
     'field': '_authoremaildisplayname'
     'pattern': 'gr://json_string_value'
     'replace': 'surname_comma_name'
-    'activated': false
+    'activated': true
   - 'data': 'json'
     'field': '_dlc_docid'
     'pattern': 'gr://json_string_value'
@@ -475,7 +475,7 @@ patterns:
     'field': '_dlc_docid'
     'pattern': 'gr://json_string_value'
     'replace': 'doc_id'
-    'activated': false
+    'activated': true
   - 'data': 'json'
     'field': '_dlc_dociditemguid'
     'pattern': 'gr://json_string_value'
@@ -485,7 +485,7 @@ patterns:
     'field': '_dlc_dociditemguid'
     'pattern': 'gr://json_string_value'
     'replace': 'guid'
-    'activated': false
+    'activated': true
   - 'data': 'json'
     'field': '_previousadhocreviewcycleid'
     'pattern': 'gr://json_number_value'
@@ -495,7 +495,7 @@ patterns:
     'field': '_previousadhocreviewcycleid'
     'pattern': 'gr://json_number_value'
     'replace': 'pos_neg_number'
-    'activated': false
+    'activated': true
   - 'data': 'json'
     'field': 'agent'
     'pattern': 'gr://json_string_value'
@@ -505,7 +505,7 @@ patterns:
     'field': 'agent'
     'pattern': 'gr://json_string_value'
     'replace': 'agent'
-    'activated': false
+    'activated': true
   - 'data': 'json'
     'field': 'assetid'
     'pattern': 'gr://json_string_value'
@@ -515,7 +515,7 @@ patterns:
     'field': 'assetid'
     'pattern': 'gr://json_string_value'
     'replace': 'assetid'
-    'activated': false
+    'activated': true
   - 'data': 'json'
     'field': 'author'
     'pattern': 'gr://json_string_value'
@@ -525,7 +525,7 @@ patterns:
     'field': 'author'
     'pattern': 'gr://json_string_value'
     'replace': 'name_surname'
-    'activated': false
+    'activated': true
   - 'data': 'json'
     'field': 'id'
     'pattern': 'gr://json_string_value'
@@ -535,7 +535,7 @@ patterns:
     'field': 'id'
     'pattern': 'gr://json_string_value'
     'replace': 'big_id'
-    'activated': false
+    'activated': true
   - 'data': 'json'
     'field': 'business objects context information'
     'pattern': 'gr://json_string_value'
@@ -545,37 +545,37 @@ patterns:
     'field': 'business objects context information'
     'pattern': 'gr://json_string_value'
     'replace': 'hex'
-    'activated': false
+    'activated': true
   - 'data': 'json'
     'field': 'business objects context information1'
     'pattern': 'gr://json_string_value'
     'replace': 'hex'
-    'activated': false
+    'activated': true
   - 'data': 'json'
     'field': 'business objects context information2'
     'pattern': 'gr://json_string_value'
     'replace': 'hex'
-    'activated': false
+    'activated': true
   - 'data': 'json'
     'field': 'business objects context information3'
     'pattern': 'gr://json_string_value'
     'replace': 'hex'
-    'activated': false
+    'activated': true
   - 'data': 'json'
     'field': 'business objects context information4'
     'pattern': 'gr://json_string_value'
     'replace': 'hex'
-    'activated': false
+    'activated': true
   - 'data': 'json'
     'field': 'business objects context information5'
     'pattern': 'gr://json_string_value'
     'replace': 'hex'
-    'activated': false
+    'activated': true
   - 'data': 'json'
     'field': 'business objects context information6'
     'pattern': 'gr://json_string_value'
     'replace': 'hex'
-    'activated': false
+    'activated': true
   - 'data': 'json'
     'field': 'buyer email'
     'pattern': 'gr://json_string_value'
@@ -585,7 +585,7 @@ patterns:
     'field': 'buyer email'
     'pattern': 'gr://json_string_value'
     'replace': 'email_user'
-    'activated': false
+    'activated': true
   - 'data': 'json'
     'field': 'cartid'
     'pattern': 'gr://json_string_value'
@@ -595,11 +595,16 @@ patterns:
     'field': 'cartid'
     'pattern': 'gr://json_string_value'
     'replace': 'cartid'
-    'activated': false
+    'activated': true
   - 'data': 'json'
     'field': 'cc'
     'pattern': 'gr://json_array'
     'replace': 'CC_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'cc'
+    'pattern': 'gr://json_array'
+    'replace': 'json_array_cc_proofpoint'
     'activated': true
 
 

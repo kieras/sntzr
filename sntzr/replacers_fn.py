@@ -163,21 +163,26 @@ def user_name_dot_surname(length=0):
     return '{}.{}'.format(r1, r2)
 
 
-def surname_comma_name(length=0):
+def surname_comma_name(length=0, complement=False):
     firstname = ['tony', 'viuva', 'jonh', 'bruce', 'clark', 'saga']
     secondname = ['stark', 'spider', 'doe', 'wayne', 'kent']
     r1 = random.choice(firstname)
     r2 = random.choice(secondname)
-    return '{}, {}'.format(r1, r2)
+
+    if complement:
+        r3 = generate_random_string(7)
+        return '{}, {}   ({})'.format(r2, r1, r3)
+    else:
+        return '{}, {}'.format(r2, r1)
 
 
-def name_surname(length=0):
+def name_surname(length=0, try_complement=True):
     firstname = ['tony', 'viuva', 'jonh', 'bruce', 'clark', 'saga']
     secondname = ['stark', 'spider', 'doe', 'wayne', 'kent']
     r1 = random.choice(firstname)
     r2 = random.choice(secondname)
     complement = random.randint(0, 10) % 2
-    if complement:
+    if try_complement and complement:
         r3 = generate_random_string(7)
         return '{} {}   ({})'.format(r1, r2, r3)
     else:
@@ -261,8 +266,29 @@ def mysql_user(length=0):
     return 'user: \'{}\''.format(user)
 
 
-# def json_big_id(length=0):
-#     return r'\"{}\"'.format(generate_random_string(length))
+def big_id(length=0):
+    return generate_random_string(length)
+
+def json_array_cc_proofpoint(length=0):
+    num = random.randint(0, 10)
+
+    if num < 3: #[\"Felipe Castro <FCastro@test.org>,        Cacilda Clark\\t<CClark@test.org>\"]
+        name1 = name_surname(length, False)
+        email1 = email_user()
+        name2 = name_surname(length, False)
+        email2 = email_user()
+        return '[\\"{} <{}>,        {}\\\\t<{}>\\"]'.format(name1, email1, name2, email2)
+    elif num >= 3 and num < 7: #[\"FCrazy@test.org\",\"CAtos@test.org\",\"RTest@test.org\"]
+        email1 = email_user()
+        email2 = email_user()
+        email3 = email_user()
+        return '[\\"{}\\",\\"{}\\",\\"{}\\"]'.format(email1, email2, email3)
+    else: # [\"\\\"Aloyo, Anna M.   (CHRMAMA)\\\" <AAloyo@njtransit.com>,        \\\"Phelps, Adam K.   (COCRAKP)\\\" <APhelps@njtransit.com>\"]
+        name1 = surname_comma_name(length, True)
+        email1 = email_user()
+        name2 = surname_comma_name(length, True)
+        email2 = email_user()
+        return '[\\"\\\\\\\"{}\\\\\\\" <{}>,        \\\\\\\"{}\\\\\\\" <{}>\\"]'.format(name1, email1, name2, email2)
 
 
 # def json_surname_comma_name(length=0):

@@ -58,8 +58,9 @@ def validate_and_normalize_item(item):
     if 'activated' not in item.keys():
         item['activated'] = True
 
+
 # Utils to manipulate global_pattern
-def build_full_pattern(global_pattern, value):
+def build_full_pattern(global_pattern, value, to_record=False):
     """
     Builds the pattern by merging the data type and field with the value dependig on the data.
     Ex: if the data is xml and the field is Name the return will be <Name>value</Name>.
@@ -75,7 +76,9 @@ def build_full_pattern(global_pattern, value):
     elif data == 'kv':
         return '{}={}'.format(field, value)
     elif data == 'json':
-        return '\\"{}\\":{}'.format(field, value)
+        raw_field = '\\"{}\\"'.format(field) if to_record else '\\\\"{}\\\\"'.format(field)
+        full_pattern = '{}:{}'.format(raw_field, value)
+        return full_pattern
 
 
 def extract_value(global_pattern, key):
@@ -94,10 +97,8 @@ def extract_value(global_pattern, key):
         kv = '{}='.format(global_pattern['field'])
         original_value = key.split(kv)[1]
     elif global_pattern['data'] == 'json':
-        #full_pattern = '\\"{}\\":({})'.format(global_pattern['field'], global_pattern['pattern'])
-        full_pattern = '\\"{}\\":({})'.format(global_pattern['field'], get_regex_pattern(global_pattern['pattern']))
-        decoded_value = full_pattern.encode('unicode-escape').decode()
-        original_value = re.search(decoded_value, key).group(1)
+        full_pattern = '\\\\"{}\\\\":({})'.format(global_pattern['field'], get_regex_pattern(global_pattern['pattern']))
+        original_value = re.search(full_pattern, key).group(1)
 
     return original_value
 
@@ -128,10 +129,8 @@ def add_global_pattern_value(global_pattern, key):
     if new_value is None:
         length = len(original_value)
         new_value = generate_new_value(global_pattern, length)
-        if global_pattern['pattern'] == 'gr://json_string_value':
-            new_value = r'\"{}\"'.format(new_value)
 
-    str_value_to_be_replaced = build_full_pattern(global_pattern, new_value)
+    str_value_to_be_replaced = build_full_pattern(global_pattern, new_value, True)
 
     global_patterns_values[key] = {
       'original_value': original_value,
@@ -173,25 +172,15 @@ def sanitize_patterns(line):
         pattern = get_regex_pattern(item['pattern'])
 
         full_pattern_regex = build_full_pattern(item, pattern)
-        full_pattern_regex_decoded = full_pattern_regex.encode('unicode-escape').decode()
-        # \\\\"cc\\\\":\\[[^\\]]*\\]
-        test = re.compile(r'\\"cc\\":\[[^\]]*\]')
-        matches = re.findall(full_pattern_regex_decoded, line)
+        matches = re.findall(full_pattern_regex, line)
 
         if len(matches) > 0:
             unique_keys = set(matches)
             for key in unique_keys:
-                # TODO: felipegc improve the way we are dealing with scapes and special chars. The way findall and sub deal with them are different
-                # key = key.replace('\\', '\\\\')
-                # key = key.replace('(', '\(')
-                # key = key.replace(')', '\)')
-
                 if key not in global_patterns_values:
                     add_global_pattern_value(item, key)
 
-                #line = re.sub(key, global_patterns_values[key]['str_to_replace'], line)
                 line = line.replace(key, global_patterns_values[key]['str_to_replace'])
-                #line = re.sub(global_patterns_values[key]['original_value'], global_patterns_values[key]['new_value'], line)
                 line = line.replace(global_patterns_values[key]['original_value'], global_patterns_values[key]['new_value'])
 
     return line
@@ -206,9 +195,12 @@ def generate_new_value(global_pattern, length=0):
     replace = global_pattern['replace']
 
     if hasattr(replacers_fn, replace):
-        return getattr(replacers_fn, replace)(length)
-    else:
-        return replace
+        replace = getattr(replacers_fn, replace)(length)
+
+    if global_pattern['pattern'] == 'gr://json_string_value':
+        replace = '\\"{}\\"'.format(replace)
+
+    return replace
 
 
 if __name__ == "__main__":
