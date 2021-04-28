@@ -9,7 +9,8 @@ global_regex:
   'gr://email': '[\w\.-]+@[\w\.-]+(?:\.[\w]+)+'
   'gr://json_string_value': '\\"[^\\"]*\\"'
   'gr://json_number_value': '[+-]?[0-9]+'
-  'gr://json_array': '\[[^]]+\]'
+  #'gr://json_array': '\[[^]]+\]' # melhorar a regex para nao pegar quando tem bracket dentro [\"\\\"spider, saga   [0gX6X2Z]\\\" <jonh.stark@2dh32.c36.com>\"]
+  'gr://json_array': \[[\\\"\w\,\s\[\]\(\)\<\.\@\>\-\?\&\=\;\']+\]
 
 patterns:
   #- 'pattern': 'gr://email'
@@ -604,7 +605,640 @@ patterns:
   - 'data': 'json'
     'field': 'cc'
     'pattern': 'gr://json_array'
-    'replace': 'json_array_cc_proofpoint'
+    'replace': 'json_array_email_proofpoint'
     'activated': true
-
-
+  - 'data': 'json'
+    'field': 'ccHashed'
+    'pattern': 'gr://json_array'
+    'replace': 'CC_HASHED_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'ccHashed'
+    'pattern': 'gr://json_array'
+    'replace': 'json_array_hashed_emails'
+    'activated': true
+  - 'data': 'json'
+    'field': 'contenttypeid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'CONTENTTYPE_ID'
+    'activated': false
+  - 'data': 'json'
+    'field': 'contenttypeid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'content_type_id'
+    'activated': true
+  - 'data': 'json'
+    'field': 'crmletteractivityid_0'
+    'pattern': 'gr://json_string_value'
+    'replace': 'CRMLETTERACTIVE_ID'
+    'activated': false
+  - 'data': 'json'
+    'field': 'crmletteractivityid_0'
+    'pattern': 'gr://json_string_value'
+    'replace': 'lower_guid'
+    'activated': true
+  - 'data': 'json'
+    'field': 'customerId'
+    'pattern': 'gr://json_string_value'
+    'replace': 'CUSTOMER_ID'
+    'activated': false
+  - 'data': 'json'
+    'field': 'customerId'
+    'pattern': 'gr://json_string_value'
+    'replace': 'lower_guid'
+    'activated': true
+  - 'data': 'json'
+    'field': 'dataBase64'
+    'pattern': '\\"[a-zA-Z0-9=\\]+\\"'
+    'replace': 'DATA_BASE64'
+    'activated': false
+  - 'data': 'json'
+    'field': 'dataBase64'
+    'pattern': '\\"[a-zA-Z0-9=\\]+\\"'
+    'replace': 'data_base_64'
+    'activated': true
+  - 'data': 'json'
+    'field': 'director'
+    'pattern': 'gr://json_string_value'
+    'replace': 'DELIVERY_ID'
+    'activated': false
+  - 'data': 'json'
+    'field': 'director'
+    'pattern': 'gr://json_string_value'
+    'replace': 'name_surname_upper'
+    'activated': true
+  - 'data': 'json'
+    'field': 'display_urn:schemas-microsoft-com:office:office#author'
+    'pattern': 'gr://json_string_value'
+    'replace': 'document_user_name'
+    'activated': true
+  - 'data': 'json'
+    'field': 'display_urn:schemas-microsoft-com:office:office#editor'
+    'pattern': 'gr://json_string_value'
+    'replace': 'document_user_name'
+    'activated': true
+  - 'data': 'json'
+    'field': 'display_urn:schemas-microsoft-com:office:office#sharedwithusers'
+    'pattern': 'gr://json_string_value'
+    'replace': 'document_user_name'
+    'activated': true
+  - 'data': 'json'
+    'field': 'documentid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'DOCUMENT_ID'
+    'activated': false
+  - 'data': 'json'
+    'field': 'documentid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'generate_random_number'
+    'activated': true
+  - 'data': 'json'
+    'field': 'domain'
+    'pattern': 'gr://json_string_value'
+    'replace': 'DOMAIN_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'domain'
+    'pattern': 'gr://json_string_value'
+    'replace': 'ad_domain'
+    'activated': true
+  - 'data': 'json'
+    'field': 'entry'
+    'pattern': 'gr://json_string_value'
+    'replace': 'ENTRY_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'entry'
+    'pattern': 'gr://json_string_value'
+    'replace': 'email_entry'
+    'activated': true
+  - 'data': 'json'
+    'field': 'from'
+    'pattern': 'gr://json_array'
+    'replace': 'FROM_ARRAY_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'from'
+    'pattern': 'gr://json_array'
+    'replace': 'json_array_diff_repr_email_proofpoint'
+    'activated': true
+  - 'data': 'json'
+    'field': 'fromDisplayNames'
+    'pattern': 'gr://json_array'
+    'replace': 'FROM_ARRAY_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'fromDisplayNames'
+    'pattern': 'gr://json_array'
+    'replace': 'json_array_surname_name'
+    'activated': true
+  - 'data': 'json'
+    'field': 'fromDomain'
+    'pattern': 'gr://json_string_value'
+    'replace': 'FROM_DOMAIN_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'fromDomain'
+    'pattern': 'gr://json_string_value'
+    'replace': 'ad_domain'
+    'activated': true
+  - 'data': 'json'
+    'field': 'fromHashed'
+    'pattern': 'gr://json_string_value'
+    'replace': 'FROM_HASHED_EMAIL_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'fromHashed'
+    'pattern': 'gr://json_string_value'
+    'replace': 'hashed_email'
+    'activated': true
+  - 'data': 'json'
+    'field': 'fromHashed'
+    'pattern': 'gr://json_array'
+    'replace': 'FROM_HASHED_ARRAY_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'fromHashed'
+    'pattern': 'gr://json_array'
+    'replace': 'json_array_hashed_email'
+    'activated': true
+  - 'data': 'json'
+    'field': 'governor'
+    'pattern': 'gr://json_string_value'
+    'replace': 'GOVERNOR_ID'
+    'activated': false
+  - 'data': 'json'
+    'field': 'governor'
+    'pattern': 'gr://json_string_value'
+    'replace': 'name_surname_upper'
+    'activated': true
+  - 'data': 'json'
+    'field': 'guid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'GUID_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'guid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'guid_no_dash'
+    'activated': true
+  - 'data': 'json'
+    'field': 'header.d'
+    'pattern': 'gr://json_string_value'
+    'replace': 'HEADERD_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'guid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'ad_domain'
+    'activated': true
+  - 'data': 'json'
+    'field': 'helo'
+    'pattern': 'gr://json_string_value'
+    'replace': 'HELO_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'helo'
+    'pattern': 'gr://json_string_value'
+    'replace': 'ad_domain'
+    'activated': true
+  - 'data': 'json'
+    'field': 'host'
+    'pattern': 'gr://json_string_value'
+    'replace': 'HOST_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'host'
+    'pattern': 'gr://json_string_value'
+    'replace': 'host'
+    'activated': true
+  - 'data': 'json'
+    'field': 'hyperlinks'
+    'pattern': 'gr://json_string_value'
+    'replace': 'LINK_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'hyperlinks'
+    'pattern': 'gr://json_string_value'
+    'replace': 'links'
+    'activated': true
+  - 'data': 'json'
+    'field': 'identity'
+    'pattern': 'gr://json_string_value'
+    'replace': 'IDENTITY_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'identity'
+    'pattern': 'gr://json_string_value'
+    'replace': 'ad_domain'
+    'activated': true
+  - 'data': 'json'
+    'field': 'identityOrg'
+    'pattern': 'gr://json_string_value'
+    'replace': 'IDENTITY_ORG_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'identityOrg'
+    'pattern': 'gr://json_string_value'
+    'replace': 'ad_domain'
+    'activated': true
+  - 'data': 'json'
+    'field': 'ip'
+    'pattern': 'gr://json_string_value'
+    'replace': 'IPV4_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'ip'
+    'pattern': 'gr://json_string_value'
+    'replace': 'ipv4'
+    'activated': true
+  - 'data': 'json'
+    'field': 'md5'
+    'pattern': 'gr://json_string_value'
+    'replace': 'MD5_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'md5'
+    'pattern': 'gr://json_string_value'
+    'replace': 'md5'
+    'activated': true
+  - 'data': 'json'
+    'field': 'message-id'
+    'pattern': 'gr://json_array'
+    'replace': 'MESSAGE_ID_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'message-id'
+    'pattern': 'gr://json_array'
+    'replace': 'message_id_array'
+    'activated': true
+  - 'data': 'json'
+    'field': 'msgid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'MSG_ID_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'msgid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'message_id'
+    'activated': true
+  - 'data': 'json'
+    'field': 'msip_label_67599526-06ca-49cc-9fa9-5307800a949a_actionid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'MSIP_LABEL_ACTION_ID_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'msip_label_67599526-06ca-49cc-9fa9-5307800a949a_actionid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'lower_guid'
+    'activated': true
+  - 'data': 'json'
+    'field': 'msip_label_67599526-06ca-49cc-9fa9-5307800a949a_owner'
+    'pattern': 'gr://json_string_value'
+    'replace': 'email_entry'
+    'activated': true
+  - 'data': 'json'
+    'field': 'msip_label_67599526-06ca-49cc-9fa9-5307800a949a_siteid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'lower_guid'
+    'activated': true
+  - 'data': 'json'
+    'field': 'origGuid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'ORIG_GUID_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'origGuid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'guid_no_dash'
+    'activated': true
+  - 'data': 'json'
+    'field': 'owner'
+    'pattern': 'gr://json_string_value'
+    'replace': 'OWNER_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'owner'
+    'pattern': 'gr://json_string_value'
+    'replace': 'email_user'
+    'activated': true
+  - 'data': 'json'
+    'field': 'p&b phone number'
+    'pattern': 'gr://json_string_value'
+    'replace': 'PHONE_NUM_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'p&b phone number'
+    'pattern': 'gr://json_string_value'
+    'replace': 'double_phone_number'
+    'activated': true
+  - 'data': 'json'
+    'field': 'qid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'QID_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'qid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'big_id'
+    'activated': true
+  - 'data': 'json'
+    'field': 'query'
+    'pattern': 'gr://json_string_value'
+    'replace': 'QUERY_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'query'
+    'pattern': 'gr://json_string_value'
+    'replace': 'query_domain'
+    'activated': true
+  - 'data': 'json'
+    'field': 'rcpts'
+    'pattern': 'gr://json_array'
+    'replace': 'RCPTS_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'rcpts'
+    'pattern': 'gr://json_array'
+    'replace': 'json_array_single_email'
+    'activated': true
+  - 'data': 'json'
+    'field': 'rcptsHashed'
+    'pattern': 'gr://json_array'
+    'replace': 'RCPTS_HASHED_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'rcptsHashed'
+    'pattern': 'gr://json_array'
+    'replace': 'json_array_hashed_email'
+    'activated': true
+  - 'data': 'json'
+    'field': 'recipient'
+    'pattern': 'gr://json_string_value'
+    'replace': 'RECIPIENT_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'recipient'
+    'pattern': 'gr://json_string_value'
+    'replace': 'email_user'
+    'activated': true
+  - 'data': 'json'
+    'field': 'relay'
+    'pattern': 'gr://json_string_value'
+    'replace': 'RELAY_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'relay'
+    'pattern': 'gr://json_string_value'
+    'replace': 'host_and_ip'
+    'activated': true
+  - 'data': 'json'
+    'field': 'reply-to'
+    'pattern': 'gr://json_array'
+    'replace': 'REPLAY_TO_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'reply-to'
+    'pattern': 'gr://json_array'
+    'replace': 'json_array_diff_repr_email_proofpoint'
+    'activated': true
+  - 'data': 'json'
+    'field': 'reply-to'
+    'pattern': 'gr://json_array'
+    'replace': 'REPLAY_TO_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'reply-to'
+    'pattern': 'gr://json_array'
+    'replace': 'json_array_diff_repr_email_proofpoint'
+    'activated': true
+  - 'data': 'json'
+    'field': 'reply-toHashed'
+    'pattern': 'gr://json_array'
+    'replace': 'REPLAY_TO_HASHED_ARRAY_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'reply-toHashed'
+    'pattern': 'gr://json_array'
+    'replace': 'json_array_hashed_email'
+    'activated': true
+  - 'data': 'json'
+    'field': 'rest-upload-url'
+    'pattern': 'gr://json_string_value'
+    'replace': 'REST_UP_URL_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'rest-upload-url'
+    'pattern': 'gr://json_string_value'
+    'replace': 'link'
+    'activated': true
+  - 'data': 'json'
+    'field': 'return-path'
+    'pattern': 'gr://json_array'
+    'replace': 'RETURN_PATH_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'return-path'
+    'pattern': 'gr://json_array'
+    'replace': 'json_array_single_domain_email'
+    'activated': true
+  - 'data': 'json'
+    'field': 'return-pathHashed'
+    'pattern': 'gr://json_array'
+    'replace': 'RETURN_PATH_HASHED_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'return-pathHashed'
+    'pattern': 'gr://json_array'
+    'replace': 'json_array_hashed_email'
+    'activated': true
+  - 'data': 'json'
+    'field': 'senderEmail'
+    'pattern': 'gr://json_string_value'
+    'replace': 'SENDER_EMAIL_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'senderEmail'
+    'pattern': 'gr://json_string_value'
+    'replace': 'email_user'
+    'activated': true
+  - 'data': 'json'
+    'field': 'sha256'
+    'pattern': 'gr://json_string_value'
+    'replace': 'SHA256_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'sha256'
+    'pattern': 'gr://json_string_value'
+    'replace': 'sha256'
+    'activated': true
+  - 'data': 'json'
+    'field': 'sid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'SID_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'sid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'big_id'
+    'activated': true
+  - 'data': 'json'
+    'field': 'smtp.mailfrom'
+    'pattern': 'gr://json_string_value'
+    'replace': 'SMTP_EMAIL_FROM_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'smtp.mailfrom'
+    'pattern': 'gr://json_string_value'
+    'replace': 'email_user'
+    'activated': true
+  - 'data': 'json'
+    'field': 'smtp.mailfromHashed'
+    'pattern': 'gr://json_string_value'
+    'replace': 'SMTP_EMAIL_FROM_HASHED_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'smtp.mailfromHashed'
+    'pattern': 'gr://json_string_value'
+    'replace': 'hashed_email'
+    'activated': true
+  - 'data': 'json'
+    'field': 'srvid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'SVRID_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'srvid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'ad_domain'
+    'activated': true
+  - 'data': 'json'
+    'field': 'stat'
+    'pattern': 'gr://json_string_value'
+    'replace': 'STAT_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'stat'
+    'pattern': 'gr://json_string_value'
+    'replace': 'sent_email_stat'
+    'activated': true
+  - 'data': 'kv'
+    'field': 'stat'
+    'pattern': 'gr://json_string_value'
+    'replace': 'STAT_KV_KEY'
+    'activated': false
+  - 'data': 'kv'
+    'field': 'stat'
+    'pattern': '[^\\"]+'
+    'replace': 'sent_email_stat'
+    'activated': true
+  - 'data': 'json'
+    'field': 'tal_id'
+    'pattern': 'gr://json_string_value'
+    'replace': 'TAL_ID_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'tal_id'
+    'pattern': 'gr://json_string_value'
+    'replace': 'guid_no_dash'
+    'activated': true
+  - 'data': 'json'
+    'field': 'termid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'TERM_ID_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'termid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'lower_guid'
+    'activated': true
+  - 'data': 'json'
+    'field': 'throttleIp'
+    'pattern': 'gr://json_string_value'
+    'replace': 'THROTTLE_IP_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'throttleIp'
+    'pattern': 'gr://json_string_value'
+    'replace': 'ipv4'
+    'activated': true
+  - 'data': 'json'
+    'field': 'titusguid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'TITUS_GUID_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'titusguid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'lower_guid'
+    'activated': true
+  - 'data': 'json'
+    'field': 'to'
+    'pattern': 'gr://json_array'
+    'replace': 'TO_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'to'
+    'pattern': 'gr://json_array'
+    'replace': 'json_array_diff_repr_email_proofpoint'
+    'activated': true
+  - 'data': 'json'
+    'field': 'toHashed'
+    'pattern': 'gr://json_array'
+    'replace': 'TO_HASHED_ARRAY_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'toHashed'
+    'pattern': 'gr://json_array'
+    'replace': 'json_array_hashed_email'
+    'activated': true
+  - 'data': 'json'
+    'field': 'url'
+    'pattern': 'gr://json_string_value'
+    'replace': 'URL_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'url'
+    'pattern': 'gr://json_string_value'
+    'replace': 'url'
+    'activated': true
+  - 'data': 'json'
+    'field': 'userconfigid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'USERCONFIGID_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'userconfigid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'user_config_id'
+    'activated': true
+  - 'data': 'json'
+    'field': 'userpermid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'USERPERMID_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'userpermid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'user_perm_id'
+    'activated': true
+  - 'data': 'json'
+    'field': 'value'
+    'pattern': 'gr://json_string_value'
+    'replace': 'VALUE_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'value'
+    'pattern': 'gr://json_string_value'
+    'replace': 'domain_email_user'
+    'activated': true
+  - 'data': 'json'
+    'field': 'x-originating-ip'
+    'pattern': 'gr://json_array'
+    'replace': 'X_ORIGINATING_IP_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'x-originating-ip'
+    'pattern': 'gr://json_array'
+    'replace': 'single_ip_inside_string_array'
+    'activated': true

@@ -181,7 +181,8 @@ def sanitize_patterns(line):
                     add_global_pattern_value(item, key)
 
                 line = line.replace(key, global_patterns_values[key]['str_to_replace'])
-                line = line.replace(global_patterns_values[key]['original_value'], global_patterns_values[key]['new_value'])
+                # TODO: felipegc precisamos ajustar a forma que iremos dar o replace para que valores que ja deram replace nao sejam dados novamente
+                # line = line.replace(global_patterns_values[key]['original_value'], global_patterns_values[key]['new_value'])
 
     return line
 
