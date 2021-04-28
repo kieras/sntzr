@@ -106,11 +106,13 @@ def extract_value(global_pattern, key):
 # Utils to manipulate global_patterns_values
 def get_new_value_by_original_value(original_value):
     """
-    Iterates over the patterns already saved in memory to find the new generated value for an original value.
+    Iterates over the patterns already saved in memory to find if a new value has already been generated.
     """
 
     for item in global_patterns_values.values():
         if item['original_value'] == original_value:
+            return item['new_value']
+        elif item['new_value'] == original_value:
             return item['new_value']
 
     return None
@@ -181,8 +183,7 @@ def sanitize_patterns(line):
                     add_global_pattern_value(item, key)
 
                 line = line.replace(key, global_patterns_values[key]['str_to_replace'])
-                # TODO: felipegc precisamos ajustar a forma que iremos dar o replace para que valores que ja deram replace nao sejam dados novamente
-                # line = line.replace(global_patterns_values[key]['original_value'], global_patterns_values[key]['new_value'])
+                line = line.replace(global_patterns_values[key]['original_value'], global_patterns_values[key]['new_value'])
 
     return line
 

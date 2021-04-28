@@ -297,10 +297,20 @@ def link(length=0):
                'acme4', 'acme5', 'acme6', 'acme7']
     domains = ['prd', 'hom', 'test', 'local']
     path = ['agent', 'local', 'level', 'test']
+
     r1 = name[random.randint(0, len(name) - 1)]
     r2 = domains[random.randint(0, len(domains) - 1)]
     r3 = path[random.randint(0, len(path) - 1)]
     return 'http://{}.{}.com/{}'.format(r1, r2, r3)
+
+
+def link_or_mailto(length=0):
+    is_link = random.randint(0, 10) % 2
+    if is_link:
+        return link(length)
+    else:
+        e = email_user()
+        return 'mailto:{}'.format(e)
 
 
 def url(length=0):
@@ -407,7 +417,7 @@ def document_user_name(length=0):
 
 def json_array_surname_name(length=0):
     try_compl = random.randint(0, 10) % 2
-    name = surname_comma_name(length, try_compl, True)
+    name = name_surname(length, try_compl)
     return '[\\"{}\\"]'.format(name)
 
 
@@ -431,8 +441,8 @@ def guid_no_dash(length=0):
 
 
 def links(length=0):
-    link1 = link()
-    link2 = link()
+    link1 = link_or_mailto(length)
+    link2 = link_or_mailto(length)
     return '{}, {}'.format(link1, link2)
 
 

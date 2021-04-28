@@ -485,7 +485,7 @@ patterns:
   - 'data': 'json'
     'field': '_dlc_dociditemguid'
     'pattern': 'gr://json_string_value'
-    'replace': 'guid'
+    'replace': 'lower_guid'
     'activated': true
   - 'data': 'json'
     'field': '_previousadhocreviewcycleid'
@@ -656,6 +656,16 @@ patterns:
     'field': 'dataBase64'
     'pattern': '\\"[a-zA-Z0-9=\\]+\\"'
     'replace': 'data_base_64'
+    'activated': true
+  - 'data': 'json'
+    'field': 'deliveryid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'DELIVERYID_KEY'
+    'activated': false
+  - 'data': 'json'
+    'field': 'deliveryid'
+    'pattern': 'gr://json_string_value'
+    'replace': 'delivery_id'
     'activated': true
   - 'data': 'json'
     'field': 'director'
