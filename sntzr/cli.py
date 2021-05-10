@@ -170,7 +170,6 @@ def sanitize_patterns(line):
         if not activated:
             continue
 
-        #item['pattern'] = get_regex_pattern(item['pattern'])
         pattern = get_regex_pattern(item['pattern'])
 
         full_pattern_regex = build_full_pattern(item, pattern)

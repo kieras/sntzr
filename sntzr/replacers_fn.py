@@ -484,6 +484,7 @@ def host_and_ip(length=0):
     i = ipv4(length)
     return '{}. [{}]'.format(h, i)
 
+
 def json_array_diff_repr_email_proofpoint(length=0):
     num = random.randint(0, 12)
 
@@ -501,6 +502,11 @@ def json_array_diff_repr_email_proofpoint(length=0):
     else: # [\"<test-email@inbound.mailchimpapp.net>\"]
         email1 = domain_email_user()
         return '[\\"<{}>\\"]'.format(email1)
+
+
+def email_between_angle_brackets(length=0):
+    email1 = domain_email_user()
+    return '<{}>'.format(email1)
 
 
 def sent_email_stat(length=0):

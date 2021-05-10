@@ -7,10 +7,11 @@ global_regex:
   'gr://guid': '[A-Fa-f0-9]{8}(?:-[A-Fa-f0-9]{4}){3}-[A-Fa-f0-9]{12}'
   'gr://sid': 'sid_[0-9a-zA-Z]+_[0-9A-Z]+'
   'gr://email': '[\w\.-]+@[\w\.-]+(?:\.[\w]+)+'
-  'gr://json_string_value': '\\"[^\\"]*\\"'
+  'gr://json_string_value': '\\"[^\\"]+\\"'
   'gr://json_number_value': '[+-]?[0-9]+'
-  #'gr://json_array': '\[[^]]+\]' # melhorar a regex para nao pegar quando tem bracket dentro [\"\\\"spider, saga   [0gX6X2Z]\\\" <jonh.stark@2dh32.c36.com>\"]
   'gr://json_array': \[[\\\"\w\,\s\[\]\(\)\<\.\@\>\-\?\&\=\;\']+\]
+  'gr://all_except_comma': '[^,]+'
+  'gr://all_between_angle_brackets': '\<[^\>]+\>'
 
 patterns:
   #- 'pattern': 'gr://email'
@@ -440,18 +441,8 @@ patterns:
   - 'data': 'json'
     'field': '_adhocreviewcycleid'
     'pattern': 'gr://json_number_value'
-    'replace': 'ADHOC_REVIEW_ID_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': '_adhocreviewcycleid'
-    'pattern': 'gr://json_number_value'
     'replace': 'pos_neg_number'
     'activated': true
-  - 'data': 'json'
-    'field': '_authoremail'
-    'pattern': 'gr://json_string_value'
-    'replace': 'AUTHOREMAIL_KEY'
-    'activated': false
   - 'data': 'json'
     'field': '_authoremail'
     'pattern': 'gr://json_string_value'
@@ -460,18 +451,8 @@ patterns:
   - 'data': 'json'
     'field': '_authoremaildisplayname'
     'pattern': 'gr://json_string_value'
-    'replace': 'AUTHOR_EMAIL_DISPLAY_NAME_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': '_authoremaildisplayname'
-    'pattern': 'gr://json_string_value'
     'replace': 'surname_comma_name'
     'activated': true
-  - 'data': 'json'
-    'field': '_dlc_docid'
-    'pattern': 'gr://json_string_value'
-    'replace': 'DLC_DOCID_KEY'
-    'activated': false
   - 'data': 'json'
     'field': '_dlc_docid'
     'pattern': 'gr://json_string_value'
@@ -480,18 +461,8 @@ patterns:
   - 'data': 'json'
     'field': '_dlc_dociditemguid'
     'pattern': 'gr://json_string_value'
-    'replace': 'DLC_DOCIDGUID_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': '_dlc_dociditemguid'
-    'pattern': 'gr://json_string_value'
     'replace': 'lower_guid'
     'activated': true
-  - 'data': 'json'
-    'field': '_previousadhocreviewcycleid'
-    'pattern': 'gr://json_number_value'
-    'replace': 'PREVIOUS_ADHOC_REVIEW_ID_KEY'
-    'activated': false
   - 'data': 'json'
     'field': '_previousadhocreviewcycleid'
     'pattern': 'gr://json_number_value'
@@ -500,18 +471,8 @@ patterns:
   - 'data': 'json'
     'field': 'agent'
     'pattern': 'gr://json_string_value'
-    'replace': 'AGENT_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'agent'
-    'pattern': 'gr://json_string_value'
     'replace': 'agent'
     'activated': true
-  - 'data': 'json'
-    'field': 'assetid'
-    'pattern': 'gr://json_string_value'
-    'replace': 'ASSET_ID_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'assetid'
     'pattern': 'gr://json_string_value'
@@ -520,28 +481,13 @@ patterns:
   - 'data': 'json'
     'field': 'author'
     'pattern': 'gr://json_string_value'
-    'replace': 'AUTHOR_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'author'
-    'pattern': 'gr://json_string_value'
     'replace': 'name_surname'
     'activated': true
   - 'data': 'json'
     'field': 'id'
     'pattern': 'gr://json_string_value'
-    'replace': 'ID_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'id'
-    'pattern': 'gr://json_string_value'
     'replace': 'big_id'
     'activated': true
-  - 'data': 'json'
-    'field': 'business objects context information'
-    'pattern': 'gr://json_string_value'
-    'replace': 'BOCI_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'business objects context information'
     'pattern': 'gr://json_string_value'
@@ -580,18 +526,8 @@ patterns:
   - 'data': 'json'
     'field': 'buyer email'
     'pattern': 'gr://json_string_value'
-    'replace': 'BUYEREMAIL_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'buyer email'
-    'pattern': 'gr://json_string_value'
     'replace': 'email_user'
     'activated': true
-  - 'data': 'json'
-    'field': 'cartid'
-    'pattern': 'gr://json_string_value'
-    'replace': 'CARTID_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'cartid'
     'pattern': 'gr://json_string_value'
@@ -600,18 +536,8 @@ patterns:
   - 'data': 'json'
     'field': 'cc'
     'pattern': 'gr://json_array'
-    'replace': 'CC_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'cc'
-    'pattern': 'gr://json_array'
     'replace': 'json_array_email_proofpoint'
     'activated': true
-  - 'data': 'json'
-    'field': 'ccHashed'
-    'pattern': 'gr://json_array'
-    'replace': 'CC_HASHED_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'ccHashed'
     'pattern': 'gr://json_array'
@@ -620,38 +546,18 @@ patterns:
   - 'data': 'json'
     'field': 'contenttypeid'
     'pattern': 'gr://json_string_value'
-    'replace': 'CONTENTTYPE_ID'
-    'activated': false
-  - 'data': 'json'
-    'field': 'contenttypeid'
-    'pattern': 'gr://json_string_value'
     'replace': 'content_type_id'
     'activated': true
   - 'data': 'json'
     'field': 'crmletteractivityid_0'
     'pattern': 'gr://json_string_value'
-    'replace': 'CRMLETTERACTIVE_ID'
-    'activated': false
-  - 'data': 'json'
-    'field': 'crmletteractivityid_0'
-    'pattern': 'gr://json_string_value'
     'replace': 'lower_guid'
     'activated': true
   - 'data': 'json'
     'field': 'customerId'
     'pattern': 'gr://json_string_value'
-    'replace': 'CUSTOMER_ID'
-    'activated': false
-  - 'data': 'json'
-    'field': 'customerId'
-    'pattern': 'gr://json_string_value'
     'replace': 'lower_guid'
     'activated': true
-  - 'data': 'json'
-    'field': 'dataBase64'
-    'pattern': '\\"[a-zA-Z0-9=\\]+\\"'
-    'replace': 'DATA_BASE64'
-    'activated': false
   - 'data': 'json'
     'field': 'dataBase64'
     'pattern': '\\"[a-zA-Z0-9=\\]+\\"'
@@ -660,18 +566,8 @@ patterns:
   - 'data': 'json'
     'field': 'deliveryid'
     'pattern': 'gr://json_string_value'
-    'replace': 'DELIVERYID_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'deliveryid'
-    'pattern': 'gr://json_string_value'
     'replace': 'delivery_id'
     'activated': true
-  - 'data': 'json'
-    'field': 'director'
-    'pattern': 'gr://json_string_value'
-    'replace': 'DELIVERY_ID'
-    'activated': false
   - 'data': 'json'
     'field': 'director'
     'pattern': 'gr://json_string_value'
@@ -695,18 +591,8 @@ patterns:
   - 'data': 'json'
     'field': 'documentid'
     'pattern': 'gr://json_string_value'
-    'replace': 'DOCUMENT_ID'
-    'activated': false
-  - 'data': 'json'
-    'field': 'documentid'
-    'pattern': 'gr://json_string_value'
     'replace': 'generate_random_number'
     'activated': true
-  - 'data': 'json'
-    'field': 'domain'
-    'pattern': 'gr://json_string_value'
-    'replace': 'DOMAIN_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'domain'
     'pattern': 'gr://json_string_value'
@@ -715,27 +601,17 @@ patterns:
   - 'data': 'json'
     'field': 'entry'
     'pattern': 'gr://json_string_value'
-    'replace': 'ENTRY_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'entry'
-    'pattern': 'gr://json_string_value'
     'replace': 'email_entry'
     'activated': true
   - 'data': 'json'
     'field': 'from'
     'pattern': 'gr://json_array'
-    'replace': 'FROM_ARRAY_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'from'
-    'pattern': 'gr://json_array'
     'replace': 'json_array_diff_repr_email_proofpoint'
-    'activated': true
-  - 'data': 'json'
-    'field': 'fromDisplayNames'
-    'pattern': 'gr://json_array'
-    'replace': 'FROM_ARRAY_KEY'
+    'activated': false
+  - 'data': 'kv'
+    'field': 'from'
+    'pattern': 'gr://all_between_angle_brackets'
+    'replace': 'email_between_angle_brackets'
     'activated': false
   - 'data': 'json'
     'field': 'fromDisplayNames'
@@ -745,18 +621,8 @@ patterns:
   - 'data': 'json'
     'field': 'fromDomain'
     'pattern': 'gr://json_string_value'
-    'replace': 'FROM_DOMAIN_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'fromDomain'
-    'pattern': 'gr://json_string_value'
     'replace': 'ad_domain'
     'activated': true
-  - 'data': 'json'
-    'field': 'fromHashed'
-    'pattern': 'gr://json_string_value'
-    'replace': 'FROM_HASHED_EMAIL_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'fromHashed'
     'pattern': 'gr://json_string_value'
@@ -765,18 +631,8 @@ patterns:
   - 'data': 'json'
     'field': 'fromHashed'
     'pattern': 'gr://json_array'
-    'replace': 'FROM_HASHED_ARRAY_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'fromHashed'
-    'pattern': 'gr://json_array'
     'replace': 'json_array_hashed_email'
     'activated': true
-  - 'data': 'json'
-    'field': 'governor'
-    'pattern': 'gr://json_string_value'
-    'replace': 'GOVERNOR_ID'
-    'activated': false
   - 'data': 'json'
     'field': 'governor'
     'pattern': 'gr://json_string_value'
@@ -785,19 +641,9 @@ patterns:
   - 'data': 'json'
     'field': 'guid'
     'pattern': 'gr://json_string_value'
-    'replace': 'GUID_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'guid'
-    'pattern': 'gr://json_string_value'
     'replace': 'guid_no_dash'
     'activated': true
   - 'data': 'json'
-    'field': 'header.d'
-    'pattern': 'gr://json_string_value'
-    'replace': 'HEADERD_KEY'
-    'activated': false
-  - 'data': 'json'
     'field': 'guid'
     'pattern': 'gr://json_string_value'
     'replace': 'ad_domain'
@@ -805,18 +651,8 @@ patterns:
   - 'data': 'json'
     'field': 'helo'
     'pattern': 'gr://json_string_value'
-    'replace': 'HELO_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'helo'
-    'pattern': 'gr://json_string_value'
     'replace': 'ad_domain'
     'activated': true
-  - 'data': 'json'
-    'field': 'host'
-    'pattern': 'gr://json_string_value'
-    'replace': 'HOST_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'host'
     'pattern': 'gr://json_string_value'
@@ -825,38 +661,18 @@ patterns:
   - 'data': 'json'
     'field': 'hyperlinks'
     'pattern': 'gr://json_string_value'
-    'replace': 'LINK_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'hyperlinks'
-    'pattern': 'gr://json_string_value'
     'replace': 'links'
     'activated': true
   - 'data': 'json'
     'field': 'identity'
     'pattern': 'gr://json_string_value'
-    'replace': 'IDENTITY_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'identity'
-    'pattern': 'gr://json_string_value'
     'replace': 'ad_domain'
     'activated': true
   - 'data': 'json'
     'field': 'identityOrg'
     'pattern': 'gr://json_string_value'
-    'replace': 'IDENTITY_ORG_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'identityOrg'
-    'pattern': 'gr://json_string_value'
     'replace': 'ad_domain'
     'activated': true
-  - 'data': 'json'
-    'field': 'ip'
-    'pattern': 'gr://json_string_value'
-    'replace': 'IPV4_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'ip'
     'pattern': 'gr://json_string_value'
@@ -865,18 +681,8 @@ patterns:
   - 'data': 'json'
     'field': 'md5'
     'pattern': 'gr://json_string_value'
-    'replace': 'MD5_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'md5'
-    'pattern': 'gr://json_string_value'
     'replace': 'md5'
     'activated': true
-  - 'data': 'json'
-    'field': 'message-id'
-    'pattern': 'gr://json_array'
-    'replace': 'MESSAGE_ID_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'message-id'
     'pattern': 'gr://json_array'
@@ -885,18 +691,13 @@ patterns:
   - 'data': 'json'
     'field': 'msgid'
     'pattern': 'gr://json_string_value'
-    'replace': 'MSG_ID_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'msgid'
-    'pattern': 'gr://json_string_value'
     'replace': 'message_id'
     'activated': true
-  - 'data': 'json'
-    'field': 'msip_label_67599526-06ca-49cc-9fa9-5307800a949a_actionid'
-    'pattern': 'gr://json_string_value'
-    'replace': 'MSIP_LABEL_ACTION_ID_KEY'
-    'activated': false
+  - 'data': 'kv'
+    'field': 'msgid'
+    'pattern': 'gr://all_between_angle_brackets'
+    'replace': 'message_id'
+    'activated': true
   - 'data': 'json'
     'field': 'msip_label_67599526-06ca-49cc-9fa9-5307800a949a_actionid'
     'pattern': 'gr://json_string_value'
@@ -915,28 +716,13 @@ patterns:
   - 'data': 'json'
     'field': 'origGuid'
     'pattern': 'gr://json_string_value'
-    'replace': 'ORIG_GUID_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'origGuid'
-    'pattern': 'gr://json_string_value'
     'replace': 'guid_no_dash'
     'activated': true
   - 'data': 'json'
     'field': 'owner'
     'pattern': 'gr://json_string_value'
-    'replace': 'OWNER_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'owner'
-    'pattern': 'gr://json_string_value'
     'replace': 'email_user'
     'activated': true
-  - 'data': 'json'
-    'field': 'p&b phone number'
-    'pattern': 'gr://json_string_value'
-    'replace': 'PHONE_NUM_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'p&b phone number'
     'pattern': 'gr://json_string_value'
@@ -945,18 +731,8 @@ patterns:
   - 'data': 'json'
     'field': 'qid'
     'pattern': 'gr://json_string_value'
-    'replace': 'QID_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'qid'
-    'pattern': 'gr://json_string_value'
     'replace': 'big_id'
     'activated': true
-  - 'data': 'json'
-    'field': 'query'
-    'pattern': 'gr://json_string_value'
-    'replace': 'QUERY_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'query'
     'pattern': 'gr://json_string_value'
@@ -965,28 +741,13 @@ patterns:
   - 'data': 'json'
     'field': 'rcpts'
     'pattern': 'gr://json_array'
-    'replace': 'RCPTS_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'rcpts'
-    'pattern': 'gr://json_array'
     'replace': 'json_array_single_email'
     'activated': true
   - 'data': 'json'
     'field': 'rcptsHashed'
     'pattern': 'gr://json_array'
-    'replace': 'RCPTS_HASHED_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'rcptsHashed'
-    'pattern': 'gr://json_array'
     'replace': 'json_array_hashed_email'
     'activated': true
-  - 'data': 'json'
-    'field': 'recipient'
-    'pattern': 'gr://json_string_value'
-    'replace': 'RECIPIENT_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'recipient'
     'pattern': 'gr://json_string_value'
@@ -995,48 +756,28 @@ patterns:
   - 'data': 'json'
     'field': 'relay'
     'pattern': 'gr://json_string_value'
-    'replace': 'RELAY_KEY'
-    'activated': false
-  - 'data': 'json'
+    'replace': 'host_and_ip'
+    'activated': true
+  - 'data': 'kv'
     'field': 'relay'
-    'pattern': 'gr://json_string_value'
+    'pattern': '[^\[]+\[[0-9\.]*\]'
     'replace': 'host_and_ip'
     'activated': true
   - 'data': 'json'
     'field': 'reply-to'
     'pattern': 'gr://json_array'
-    'replace': 'REPLAY_TO_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'reply-to'
-    'pattern': 'gr://json_array'
     'replace': 'json_array_diff_repr_email_proofpoint'
     'activated': true
   - 'data': 'json'
     'field': 'reply-to'
     'pattern': 'gr://json_array'
-    'replace': 'REPLAY_TO_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'reply-to'
-    'pattern': 'gr://json_array'
     'replace': 'json_array_diff_repr_email_proofpoint'
     'activated': true
-  - 'data': 'json'
-    'field': 'reply-toHashed'
-    'pattern': 'gr://json_array'
-    'replace': 'REPLAY_TO_HASHED_ARRAY_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'reply-toHashed'
     'pattern': 'gr://json_array'
     'replace': 'json_array_hashed_email'
     'activated': true
-  - 'data': 'json'
-    'field': 'rest-upload-url'
-    'pattern': 'gr://json_string_value'
-    'replace': 'REST_UP_URL_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'rest-upload-url'
     'pattern': 'gr://json_string_value'
@@ -1045,18 +786,8 @@ patterns:
   - 'data': 'json'
     'field': 'return-path'
     'pattern': 'gr://json_array'
-    'replace': 'RETURN_PATH_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'return-path'
-    'pattern': 'gr://json_array'
     'replace': 'json_array_single_domain_email'
     'activated': true
-  - 'data': 'json'
-    'field': 'return-pathHashed'
-    'pattern': 'gr://json_array'
-    'replace': 'RETURN_PATH_HASHED_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'return-pathHashed'
     'pattern': 'gr://json_array'
@@ -1065,18 +796,8 @@ patterns:
   - 'data': 'json'
     'field': 'senderEmail'
     'pattern': 'gr://json_string_value'
-    'replace': 'SENDER_EMAIL_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'senderEmail'
-    'pattern': 'gr://json_string_value'
     'replace': 'email_user'
     'activated': true
-  - 'data': 'json'
-    'field': 'sha256'
-    'pattern': 'gr://json_string_value'
-    'replace': 'SHA256_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'sha256'
     'pattern': 'gr://json_string_value'
@@ -1085,18 +806,8 @@ patterns:
   - 'data': 'json'
     'field': 'sid'
     'pattern': 'gr://json_string_value'
-    'replace': 'SID_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'sid'
-    'pattern': 'gr://json_string_value'
     'replace': 'big_id'
     'activated': true
-  - 'data': 'json'
-    'field': 'smtp.mailfrom'
-    'pattern': 'gr://json_string_value'
-    'replace': 'SMTP_EMAIL_FROM_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'smtp.mailfrom'
     'pattern': 'gr://json_string_value'
@@ -1105,18 +816,8 @@ patterns:
   - 'data': 'json'
     'field': 'smtp.mailfromHashed'
     'pattern': 'gr://json_string_value'
-    'replace': 'SMTP_EMAIL_FROM_HASHED_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'smtp.mailfromHashed'
-    'pattern': 'gr://json_string_value'
     'replace': 'hashed_email'
     'activated': true
-  - 'data': 'json'
-    'field': 'srvid'
-    'pattern': 'gr://json_string_value'
-    'replace': 'SVRID_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'srvid'
     'pattern': 'gr://json_string_value'
@@ -1125,28 +826,13 @@ patterns:
   - 'data': 'json'
     'field': 'stat'
     'pattern': 'gr://json_string_value'
-    'replace': 'STAT_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'stat'
-    'pattern': 'gr://json_string_value'
     'replace': 'sent_email_stat'
     'activated': true
   - 'data': 'kv'
     'field': 'stat'
-    'pattern': 'gr://json_string_value'
-    'replace': 'STAT_KV_KEY'
-    'activated': false
-  - 'data': 'kv'
-    'field': 'stat'
-    'pattern': '[^\\"]+'
+    'pattern': 'Sent\s+\([^\)]+\)'
     'replace': 'sent_email_stat'
     'activated': true
-  - 'data': 'json'
-    'field': 'tal_id'
-    'pattern': 'gr://json_string_value'
-    'replace': 'TAL_ID_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'tal_id'
     'pattern': 'gr://json_string_value'
@@ -1155,18 +841,8 @@ patterns:
   - 'data': 'json'
     'field': 'termid'
     'pattern': 'gr://json_string_value'
-    'replace': 'TERM_ID_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'termid'
-    'pattern': 'gr://json_string_value'
     'replace': 'lower_guid'
     'activated': true
-  - 'data': 'json'
-    'field': 'throttleIp'
-    'pattern': 'gr://json_string_value'
-    'replace': 'THROTTLE_IP_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'throttleIp'
     'pattern': 'gr://json_string_value'
@@ -1175,28 +851,18 @@ patterns:
   - 'data': 'json'
     'field': 'titusguid'
     'pattern': 'gr://json_string_value'
-    'replace': 'TITUS_GUID_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'titusguid'
-    'pattern': 'gr://json_string_value'
     'replace': 'lower_guid'
     'activated': true
   - 'data': 'json'
     'field': 'to'
     'pattern': 'gr://json_array'
-    'replace': 'TO_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'to'
-    'pattern': 'gr://json_array'
     'replace': 'json_array_diff_repr_email_proofpoint'
     'activated': true
-  - 'data': 'json'
-    'field': 'toHashed'
-    'pattern': 'gr://json_array'
-    'replace': 'TO_HASHED_ARRAY_KEY'
-    'activated': false
+  - 'data': 'kv'
+    'field': 'to'
+    'pattern': 'gr://all_between_angle_brackets'
+    'replace': 'email_between_angle_brackets'
+    'activated': true
   - 'data': 'json'
     'field': 'toHashed'
     'pattern': 'gr://json_array'
@@ -1205,18 +871,8 @@ patterns:
   - 'data': 'json'
     'field': 'url'
     'pattern': 'gr://json_string_value'
-    'replace': 'URL_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'url'
-    'pattern': 'gr://json_string_value'
     'replace': 'url'
     'activated': true
-  - 'data': 'json'
-    'field': 'userconfigid'
-    'pattern': 'gr://json_string_value'
-    'replace': 'USERCONFIGID_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'userconfigid'
     'pattern': 'gr://json_string_value'
@@ -1225,28 +881,13 @@ patterns:
   - 'data': 'json'
     'field': 'userpermid'
     'pattern': 'gr://json_string_value'
-    'replace': 'USERPERMID_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'userpermid'
-    'pattern': 'gr://json_string_value'
     'replace': 'user_perm_id'
     'activated': true
   - 'data': 'json'
     'field': 'value'
     'pattern': 'gr://json_string_value'
-    'replace': 'VALUE_KEY'
-    'activated': false
-  - 'data': 'json'
-    'field': 'value'
-    'pattern': 'gr://json_string_value'
     'replace': 'domain_email_user'
     'activated': true
-  - 'data': 'json'
-    'field': 'x-originating-ip'
-    'pattern': 'gr://json_array'
-    'replace': 'X_ORIGINATING_IP_KEY'
-    'activated': false
   - 'data': 'json'
     'field': 'x-originating-ip'
     'pattern': 'gr://json_array'
