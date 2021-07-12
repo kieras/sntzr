@@ -57,9 +57,9 @@ def mac_no_colon(length=0):
     return generate_random_hexdecimal(length, True)
 
 
-def generate_mac_addrress(sep=""):
-    r1 = ''.join('{}{}'.format(generate_random_hexdecimal(2, True), sep) for i in range(5))
-    return '{}{}'.format(r1, generate_random_hexdecimal(2, True))
+def generate_mac_addrress(sep="", is_lower_case=True):
+    r1 = ''.join('{}{}'.format(generate_random_hexdecimal(2, is_lower_case), sep) for i in range(5))
+    return '{}{}'.format(r1, generate_random_hexdecimal(2, is_lower_case))
 
 
 def mac_address_dash(length=0):
@@ -70,8 +70,21 @@ def mac_address_colon(length=0):
     return generate_mac_addrress(':')
 
 
-def hex(length=0):
-    return generate_random_hexdecimal(length, True)
+def mac_address_colon_uppercase(length=0):
+    return generate_mac_addrress(':', False)
+
+
+def mac_cisco_asa(length=0):
+    # MAC 0012.123a.89c1
+    r1 = generate_random_hexdecimal(4, True)
+    r2 = generate_random_hexdecimal(4, True)
+    r3 = generate_random_hexdecimal(4, True)
+
+    return 'MAC {}.{}.{}'.format(r1, r2, r3)
+
+
+def hex(length=0, is_lower_case=True):
+    return generate_random_hexdecimal(length, is_lower_case)
 
 
 def pos_neg_number(length=0):
@@ -87,12 +100,31 @@ def crazy_name(length=0):
     return  'S-{}-{}-{}'.format(r1, r2, r3)
 
 
+def windows_security_id(length=0):
+    #S-1-2-12-823511234-1958361234-682001234-1234
+    r1= generate_random_number(9)
+    r2= generate_random_number(10)
+    r3= generate_random_number(9)
+    r4= generate_random_number(4)
+
+    return 'S-1-2-3-{}-{}-{}-{}'.format(r1, r2, r3, r4)
+
+
 def machine_name(length=0):
     letters = ['A', 'B', 'C', 'X', 'Y', 'Z']
     r1 = ''.join(random.choice(letters) for i in range(4))
     r2 = random.randint(100000,999999)
     r3 = ''.join(random.choice(letters) for i in range(3))
     return '{}{}-{}'.format(r1, r2, r3)
+
+
+def machine_sep(length=0, is_lower_case=False):
+    return generate_random_hexdecimal(length, is_lower_case)
+
+
+def device_name(length=0):
+    # J0093305W28774D
+    return machine_sep(15, False)
 
 
 def ipv4(length=0):
@@ -123,9 +155,20 @@ def guid(length=0, is_lower=False, is_separated=True):
     else:
         return '{}{}{}{}{}'.format(r1, r2, r3, r4, r5)
 
+def guid_upper_without_separator(length=0):
+    return guid(length, False, False)
+
 
 def lower_guid(length=0, is_lower=False):
     return guid(length, True)
+
+
+def ref_uid(length=0, is_lower=False):
+    # 8040:abc28ed0-1234-12eb-abcd-000003c20c9f
+    r1 = generate_random_number(4)
+    r2 = lower_guid()
+
+    return '{}:{}'.format(r1, r2)
 
 
 def shost(length=0):
@@ -134,9 +177,30 @@ def shost(length=0):
     return 'www.{}.acme.com'.format(r1)
 
 
+def collector_host(length=0):
+    # hostname.cc.ad.cchs.net
+    name = ['acme1', 'acme2', 'acme3', 'acme4']
+    r1 = random.choice(name)
+    r2 = generate_random_string(2)
+    r3 = generate_random_string(2)
+    r4 = generate_random_string(4)
+    return '{}.{}.{}.{}.net'.format(r1, r2, r3, r4)
+
+
 def external_id(length=0):
     r1 = random.randint(100000,999999)
     return str(r1)
+
+
+def fqdn(length=0):
+    #abcd07-v123321.abc.xy.acme.com
+    r1 = generate_random_string(6)
+    r2 = generate_random_string(6)
+    r3 = generate_random_string(3)
+    r4 = generate_random_string(2)
+    domains = ['acme1', 'acme2', 'acme3', 'acme4']
+    r5 = domains[random.randint(0, len(domains) - 1)]
+    return '{}-v{}.{}.{}.{}.com'.format(r1, r2, r3, r4, r5)
 
 
 def dt_machine_name(length=0):
@@ -272,6 +336,7 @@ def phone(length=0):
     r3 = generate_random_number(4)
     return '({}) {}-{}'.format(r1, r2, r3)
 
+
 def ad_domain(length=0):
     letters = ['acme1', 'acme2', 'acme3',
                'acme4', 'acme5', 'acme6', 'acme7']
@@ -347,6 +412,13 @@ def sid(length=0):
     return 'sid_{}_{}'.format(r1, r2)
 
 
+def simple_domain(length=0):
+    domains = ['ACME', 'CORP', 'COMP', 'STARK', 'DOMA']
+    r1 = random.choice(domains)
+
+    return r1
+
+
 def mysql_user(length=0):
     user = generate_random_user()
     return 'user: \'{}\''.format(user)
@@ -354,6 +426,37 @@ def mysql_user(length=0):
 
 def big_id(length=0):
     return generate_random_string(length)
+
+
+def windows_path(length=0):
+    # "C:\\\\Users\\\\cra3\\\\AppData\\\\Local\\\\Microsoft\\\\SquirrelTemp
+    root = ['Users', 'ProgramData']
+    user_or_program = generate_random_string(8)
+    folder = generate_random_string(8)
+    leaf = ['TEST', 'UAT', 'DummyFiles']
+
+    r1 = root[random.randint(0, len(root) - 1)]
+    r2 = leaf[random.randint(0, len(leaf) - 1)]
+
+    return 'C:\\\\\\\\{}\\\\\\\\{}\\\\\\\\{}\\\\\\\\{}'.format(r1, user_or_program, folder, r2)
+
+
+def windows_acc_name(length=0):
+    #CB669
+    r1 = generate_random_string(2)
+    r2 = generate_random_number(3)
+
+    return '{}{}'.format(r1, r2)
+
+
+def windows_user_principal_name(length=0):
+    #cb699@acme.com
+    acc_name = windows_acc_name(length)
+    domains = ['acme', 'corp', 'comp', 'stark', 'doma']
+    r1 = random.choice(domains)
+
+    return '{}@{}.com'.format(acc_name, r1)
+
 
 def json_array_email_proofpoint(length=0):
     # num = random.randint(0, 12)
@@ -440,6 +543,14 @@ def guid_no_dash(length=0):
     return guid(length, True, False)
 
 
+def azure_family(length=0):
+    # dd8541c-de6d-40c7-40b1-08d8e032e6ef-15217734666834694554-1
+    g = guid(length, True)
+    r1 = generate_random_number(20)
+
+    return '{}-{}-1'.format(g, r1)
+
+
 def links(length=0):
     link1 = link_or_mailto(length)
     link2 = link_or_mailto(length)
@@ -450,8 +561,24 @@ def md5(length=0):
     return hex(32)
 
 
+def md5_upper(length=0):
+    return hex(32, False)
+
+
 def sha256(length=0):
     return hex(64)
+
+
+def sha256_upper(length=0):
+    return hex(64, False)
+
+
+def net_bios_name(length=0):
+    #abcd-l123321
+    r1 = generate_random_string(4)
+    r2 = generate_random_string(7)
+
+    return '{}-{}'.format(r1, r2)
 
 
 def message_id_array(length=0):
@@ -531,8 +658,62 @@ def user_perm_id(length=0):
     return 'urn:user:PA{}'.format(r1)
 
 
+def user_cisco_asa(length=0):
+    r1 = generate_random_user()
+
+    return 'User \'{}\''.format(r1)
+
+
+def username_cisco_asa(length=0):
+    # Username = acme001
+    r1 = generate_random_user()
+
+    return 'Username = {}'.format(r1)
+
+
+def user_angle_brackets_cisco_asa(length=0):
+    # User <pgime012>
+    name = ['stark', 'spider', 'doe', 'wayne', 'kent']
+    r1 = random.choice(name)
+    r2 = generate_random_string(2)
+
+    return 'User <{}{}>'.format(r1, r2)
+
+
 def single_ip_inside_string_array(length=0):
     is_ipv4 = random.randint(0, 10) % 2
     ip = ipv4() if is_ipv4 else ipv6()
 
     return '[\\"[{}]\\"]'.format(ip)
+
+
+def src_host(length=0):
+    pre = ['ABC', 'XYZ', 'Test', 'Prd']
+    middle = ['Stark', 'Spider', 'Doe', 'Wayne', 'Kent']
+    last = ['Acme1', 'Acme2', 'Acme3', 'Acme4', 'Acme5', 'Acme6']
+    r1 = pre[random.randint(0, len(pre) - 1)]
+    r2 = middle[random.randint(0, len(middle) - 1)]
+    r3 = last[random.randint(0, len(last) - 1)]
+
+    return '{}-{}-{}'.format(r1, r2, r3)
+
+
+def json_windows_path(length=0):
+    path = windows_path(length)
+    return '\\"{}\\"'.format(path)
+
+
+def json_email_entry(length=0):
+    email = email_entry(length)
+    return '\\"{}\\"'.format(email)
+
+
+def json_array_guid(length=0):
+    guid_1 = guid(length, True)
+    guid_2 = guid(length, True)
+
+    return '[\\"{}\\", \\"{}\\"]'.format(guid_1, guid_2)
+
+
+
+

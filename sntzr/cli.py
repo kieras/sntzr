@@ -125,7 +125,8 @@ def add_global_pattern_value(global_pattern, key):
     """
 
     original_value = extract_value(global_pattern, key)
-
+    # TODO(felipegc) cleaning the json value by removing the \"
+    bare_original_value = original_value.replace('\\"','')
     new_value = get_new_value_by_original_value(original_value)
 
     if new_value is None:
@@ -133,11 +134,16 @@ def add_global_pattern_value(global_pattern, key):
         new_value = generate_new_value(global_pattern, length)
 
     str_value_to_be_replaced = build_full_pattern(global_pattern, new_value, True)
+    # TODO(felipegc) cleaning the json value by removing the \"
+    bare_new_value = new_value.replace('\\"','')
 
     global_patterns_values[key] = {
       'original_value': original_value,
       'new_value': new_value,
-      'str_to_replace': str_value_to_be_replaced
+      'str_to_replace': str_value_to_be_replaced,
+      # TODO(felipegc) cleaning the json value by removing the \"
+      'bare_original_value': bare_original_value,
+      'bare_new_value': bare_new_value
     }
 
 
@@ -183,6 +189,10 @@ def sanitize_patterns(line):
 
                 line = line.replace(key, global_patterns_values[key]['str_to_replace'])
                 line = line.replace(global_patterns_values[key]['original_value'], global_patterns_values[key]['new_value'])
+                # TODO(felipegc) cleaning the json value by removing the \"
+                # This is dangerous because we may end up by replacing a piece of string field name
+                # ex: "domain": "ent" -> "domain": "ACME" so the "ent" will replace an field such as "comment" -> "commACME"
+                line = line.replace(global_patterns_values[key]['bare_original_value'], global_patterns_values[key]['bare_new_value'])
 
     return line
 
