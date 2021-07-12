@@ -5,8 +5,10 @@ import yaml
 from sntzr.__version__ import __version__ as version
 from sntzr import replacers_fn
 
+
 global_patterns_values = {}
 all_config = None
+
 
 @click.command()
 @click.version_option(version=version)
@@ -26,10 +28,18 @@ def main(input_file, config_file):
                 print(line, end='')
 
 
-
 def load_config(config_file):
-    with open(config_file) as f:
-        config = yaml.safe_load(f)
+    config = yaml.safe_load(open(config_file))
+    all_patterns = []
+    for include in config.get('include_patterns', []):
+        current_patterns = yaml.safe_load(open(include))
+        all_patterns.extend(current_patterns)
+
+    if 'patterns' in config and hasattr(config['patterns'], 'extend'):
+        config['patterns'].extend(all_patterns)
+    else:
+        config['patterns'] = all_patterns
+
     return config
 
 

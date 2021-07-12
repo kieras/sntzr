@@ -1,0 +1,30 @@
+- 'pattern': 'p99'
+  'replace': 'z12'
+  'activated': false
+- 'pattern': 'P99'
+  'replace': 'Z12'
+  'activated': false
+- 'pattern': 'vcs'
+  'replace': 'abc'
+  'activated': false
+- 'pattern': 'VCS'
+  'replace': 'ABC'
+  'activated': false
+- 'pattern': 'gr://sid'
+  'replace': 'sid'
+  'activated': false
+- 'pattern': 'gr://guid'
+  'replace': 'guid'
+  'activated': false
+- 'pattern': 'gr://guid'
+  'replace': 'guid'
+  'activated': false
+- 'pattern': 'host: ''(?!localhost)[a-z]*'''
+  'replace': 'host: ''GENERATE_HOST'''
+  'activated': false
+- 'pattern': 'db: ''(?!unconnected)[a-z]*'''
+  'replace': 'host: ''GENERATE_DB'''
+  'activated': false
+- 'pattern': 'user: ''(?!unconnected)[a-z]*'''
+  'replace': 'mysql_user'
+  'activated': false

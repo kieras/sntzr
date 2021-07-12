@@ -50,6 +50,8 @@ patterns:
     'activated': false
   - 'pattern': 'gr://host'
     'replace': 'www.acme.com'
+
+include_patterns: [./patterns/sep.yaml]
 ```
 
 Detailed info about each configuratio file field:
@@ -80,6 +82,14 @@ You should define 5 fields here.
   - activated: If you want to use this pattern, set to true, false otherwise.
 
 * obs: You may ommit the data, field and activated fields which are not mandatory. In this case, default values will be used: 'raw', '-', 'true' respectively.
+
+include_patterns:
+
+You should define an array here containing multiple .yaml files only made of patterns. This will extend all patterns you may have(or not on the sntzr.yaml file) plus all the ones you specify inside the array.
+
+```
+include_patterns: [./patterns/custom_1.yaml, ./patterns/custom_2.yaml]
+```
 
 
 ## Install from local directory
