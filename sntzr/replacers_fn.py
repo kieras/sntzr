@@ -87,6 +87,10 @@ def hex(length=0, is_lower_case=True):
     return generate_random_hexdecimal(length, is_lower_case)
 
 
+def hex_upper(length=0):
+    return generate_random_hexdecimal(length, False)
+
+
 def pos_neg_number(length=0):
     signal = random.choice(['-', ''])
     number = generate_random_number(length)
@@ -239,6 +243,14 @@ def user_name_dot_surname(length=0):
     r1 = ''.join(random.choice(letters) for i in range(8))
     r2 = ''.join(random.choice(letters) for i in range(8))
     return '{}.{}'.format(r1, r2)
+
+
+def user_name_surname(length=0):
+    firstname = ['tony', 'viuva', 'jonh', 'bruce', 'clark', 'saga']
+    secondname = ['stark', 'spider', 'doe', 'wayne', 'kent']
+    r1 = random.choice(firstname)
+    r2 = random.choice(secondname)
+    return '{}{}'.format(r1, r2)
 
 
 def surname_comma_name(length=0, complement=False, is_complement_brackets=False):
@@ -565,6 +577,10 @@ def md5_upper(length=0):
     return hex(32, False)
 
 
+def sha1(length=0):
+    return hex(40)
+
+
 def sha256(length=0):
     return hex(64)
 
@@ -715,5 +731,96 @@ def json_array_guid(length=0):
     return '[\\"{}\\", \\"{}\\"]'.format(guid_1, guid_2)
 
 
+def symantec_authorization(length=0):
+    # \\\"Authorization\\\":\\\"token 00abcde0132547f7a9603a4d9f912345\\\"
+    r1 = generate_random_hexdecimal(32, True)
+    return '\\\\\\"Authorization\\\\\\":\\\\\\"token {}\\\\\\"'.format(r1)
 
 
+def symantec_client_id(length=0):
+    # \\\"client_id\\\":\\\"__FGL__1213131313131\\\"
+    r1 = generate_random_hexdecimal(180, True)
+    return '\\\\\\"client_id\\\\\\":\\\\\\"__FGL__{}\\\\\\"'.format(r1)
+
+
+def symantec_mstr_auth_token(length=0):
+    # \\\"X-MSTR-AuthToken\\\":\\\"123402ho2n9g1umkek6dlkabcd\\\"
+    r1 = generate_random_hexdecimal(27, True)
+    return '\\\\\\"X-MSTR-AuthToken\\\\\\":\\\\\\"{}\\\\\\"'.format(r1)
+
+
+def symantec_mstr_projectid(length=0):
+    # \\\"X-MSTR-ProjectID\\\":\\\"ABCDC24711E9AD2AFCF60080EF951234\\\"
+    r1 = generate_random_hexdecimal(32, False)
+    return '\\\\\\"X-MSTR-ProjectID\\\\\\":\\\\\\"{}\\\\\\"'.format(r1)
+
+
+def json_array_email_workspace(length=0):
+    r1 = email_user()
+    r2 = email_user()
+    r3 = email_user()
+    r4 = email_user()
+    return '[\\"{}\\",\\"{}\\",\\"{}\\",\\"{}\\"]'.format(r1, r2, r3, r4)
+
+
+def etag(length=0):
+    # \"etag\":\"\\\"123ABCDjmaexiWf6erlw41vzbKis3GAHwFKPo-K4ddk/sOv_TuW6giLMJP6jpcqqiGS99Lw\\\"\"
+    r1 = generate_random_string(71)
+    return '\\\"etag\\\":\\\"\\\\\\\"{}\\\\\\\"\\\"'.format(r1)
+
+
+def pan_fw_user(length=0):
+    #acme\\felipecastro
+    r1 = user_name_surname(length)
+    return 'acme\\\\{}'.format(r1)
+
+
+def pan_fw_devicename(length=0):
+    #ACME101MD01FW03
+    r1 = generate_random_number(3)
+    r2 = generate_random_string(2).upper()
+
+    return 'ACME{}{}01FW01'.format(r1, r2)
+
+
+def airwatch_domain_user(length=0):
+    domains = ['acme1', 'acme2', 'acme3', 'acme4']
+    letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', '1', '2', '3', '4', '5', '6']
+    r1 = domains[random.randint(0, len(domains) - 1)]
+    r2 = ''.join(random.choice(letters) for i in range(7))
+    return '{}\{}'.format(r1, r2)
+
+
+def airwatch_asset_number(length=0):
+    r1 = generate_random_number(8)
+    r2 = hex_upper(16)
+    return '{}-{}'.format(r1, r2)
+
+
+def airwatch_device(length=0):
+    r1 = generate_random_string(7)
+    r2 = generate_random_string(7)
+    return '{}.{}'.format(r1, r2)
+
+
+def airwatch_friendly_name(length=0):
+    r1 = hex_upper(6)
+    r2 = generate_random_string(6)
+    return '{}.{}'.format(r1, r2)
+
+
+def random_string_between_escaped_quote(length=0):
+    r1 = generate_random_string(length)
+    return '\\"{}\\"'.format(r1)
+
+
+def ip_between_escaped_quote(length=0):
+    r1 = ipv4()
+    return '\\"{}\\"'.format(r1)
+
+
+def bro_json_hostname(length=0):
+    # abcd50778-A1
+    r1 = generate_random_string(9)
+    r2 = generate_random_string(2)
+    return '{}-{}'.format(r1, r2)

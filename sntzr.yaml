@@ -13,7 +13,8 @@ global_regex:
   'gr://all_except_comma': '[^,]+'
   'gr://all_between_angle_brackets': '\<[^\>]+\>'
   'gr://json_email': '\\"[\w\.-]+@[\w\.-]+(?:\.[\w]+)+\\"'
+  'gr://hash_40': '[A-Fa-f0-9]{40}'
 
 patterns:
 
-include_patterns: [./patterns/sep.yaml]
+include_patterns: [./patterns/bro_json.yaml]
