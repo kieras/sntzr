@@ -1,0 +1,2 @@
+- 'pattern': 'gr://ipv4'
+  'replace': 'ipv4'

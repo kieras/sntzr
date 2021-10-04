@@ -1,0 +1,9 @@
+- 'pattern': 'gr://ipv4'
+  'replace': 'ipv4'
+  'activated': true
+- 'pattern': 'jetblue'
+  'replace': 'acme'
+  'activated': true
+- 'pattern': 'gr://guid'
+  'replace': 'lower_guid'
+  'activated': true

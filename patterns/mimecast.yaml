@@ -1,0 +1,13 @@
+- 'data': 'kv'
+  'field': 'headerFrom'
+  'pattern': '[\w\d.]+@[\w\d.]+'
+  'replace': 'domain_email_user'
+  'activated': false
+- 'data': 'kv'
+  'field': 'IP'
+  'pattern': 'gr://ipv4'
+  'replace': 'ipv4'
+  'activated': false
+- 'pattern': 'prod.outlook.com'
+  'replace': 'test.email.com'
+  'activated': false
